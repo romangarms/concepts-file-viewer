@@ -14,6 +14,10 @@ class ConceptsFileViewer {
   private readonly statusElement: HTMLElement;
   private readonly controlsDiv: HTMLElement;
   private readonly downloadButton: HTMLButtonElement;
+  private readonly zoomControlsDiv: HTMLElement;
+  private readonly zoomInButton: HTMLButtonElement;
+  private readonly zoomOutButton: HTMLButtonElement;
+  private readonly resetViewButton: HTMLButtonElement;
   private currentPlists: ConceptPlists | null = null;
 
   constructor() {
@@ -24,8 +28,12 @@ class ConceptsFileViewer {
     this.statusElement = document.getElementById('status') as HTMLElement;
     this.controlsDiv = document.getElementById('controls') as HTMLElement;
     this.downloadButton = document.getElementById('download-json') as HTMLButtonElement;
+    this.zoomControlsDiv = document.getElementById('zoom-controls') as HTMLElement;
+    this.zoomInButton = document.getElementById('zoom-in') as HTMLButtonElement;
+    this.zoomOutButton = document.getElementById('zoom-out') as HTMLButtonElement;
+    this.resetViewButton = document.getElementById('reset-view') as HTMLButtonElement;
 
-    if (!this.canvas || !this.dropZone || !this.fileInput || !this.statusElement || !this.controlsDiv || !this.downloadButton) {
+    if (!this.canvas || !this.dropZone || !this.fileInput || !this.statusElement || !this.controlsDiv || !this.downloadButton || !this.zoomControlsDiv || !this.zoomInButton || !this.zoomOutButton || !this.resetViewButton) {
       throw new Error('Required DOM elements not found');
     }
 
@@ -58,6 +66,11 @@ class ConceptsFileViewer {
     // Download button
     this.downloadButton.addEventListener('click', () => this.downloadAllPlists());
 
+    // Zoom controls
+    this.zoomInButton.addEventListener('click', () => this.renderer.zoomIn());
+    this.zoomOutButton.addEventListener('click', () => this.renderer.zoomOut());
+    this.resetViewButton.addEventListener('click', () => this.renderer.resetView());
+
     // Window resize
     window.addEventListener('resize', () => this.handleResize());
   }
@@ -78,6 +91,7 @@ class ConceptsFileViewer {
     this.dropZone.style.display = 'none';
     this.canvas.style.display = 'block';
     this.controlsDiv.style.display = 'block';
+    this.zoomControlsDiv.style.display = 'flex';
 
     // Resize canvas now that it's visible
     this.renderer.resize();
