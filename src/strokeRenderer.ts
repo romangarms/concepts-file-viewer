@@ -26,7 +26,7 @@ export class StrokeRenderer {
     let maxY = -Infinity;
 
     for (const stroke of strokes) {
-      for (const point of stroke) {
+      for (const point of stroke.points) {
         minX = Math.min(minX, point.x);
         minY = Math.min(minY, point.y);
         maxX = Math.max(maxX, point.x);
@@ -55,59 +55,50 @@ export class StrokeRenderer {
       return;
     }
 
-    console.log(`Rendering ${strokes.length} strokes`);
-    console.log('First stroke sample:', strokes[0]?.slice(0, 3));
-
     this.clear();
 
     // Calculate bounds and scaling
     const bounds = this.calculateBounds(strokes);
-    console.log('Bounds:', bounds);
-
     const width = bounds.maxX - bounds.minX;
     const height = bounds.maxY - bounds.minY;
-    console.log('Drawing size:', width, 'x', height);
 
     const padding = 40;
     const scaleX = (this.canvas.width - padding * 2) / width;
     const scaleY = (this.canvas.height - padding * 2) / height;
     this.scale = Math.min(scaleX, scaleY);
 
-    console.log('Scale:', this.scale);
-    console.log('Canvas size:', this.canvas.width, 'x', this.canvas.height);
-
     this.offsetX = padding - bounds.minX * this.scale;
     this.offsetY = padding - bounds.minY * this.scale;
 
     // Render each stroke
     this.ctx.strokeStyle = '#000000';
-    this.ctx.lineWidth = 2;
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
 
     for (const stroke of strokes) {
       this.renderStroke(stroke);
     }
-
-    console.log('Rendering complete');
   }
 
   /**
    * Render a single stroke
    */
   private renderStroke(stroke: Stroke): void {
-    if (stroke.length === 0) return;
+    if (stroke.points.length === 0) return;
+
+    // Set stroke width (scale it with the drawing)
+    this.ctx.lineWidth = stroke.width * this.scale;
 
     this.ctx.beginPath();
 
-    const firstPoint = stroke[0];
+    const firstPoint = stroke.points[0];
     this.ctx.moveTo(
       firstPoint.x * this.scale + this.offsetX,
       this.canvas.height - (firstPoint.y * this.scale + this.offsetY)
     );
 
-    for (let i = 1; i < stroke.length; i++) {
-      const point = stroke[i];
+    for (let i = 1; i < stroke.points.length; i++) {
+      const point = stroke.points[i];
       this.ctx.lineTo(
         point.x * this.scale + this.offsetX,
         this.canvas.height - (point.y * this.scale + this.offsetY)

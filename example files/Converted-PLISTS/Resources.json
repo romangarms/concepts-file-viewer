@@ -1,0 +1,42 @@
+{
+  "$version": 100000,
+  "$archiver": "THFormatObjCEncoder",
+  "$top": {
+    "root": {
+      "UID": 1
+    }
+  },
+  "$objects": [
+    "$null",
+    {
+      "importedResourceMap": {
+        "UID": 2
+      },
+      "$class": {
+        "UID": 4
+      }
+    },
+    {
+      "NS.keys": [],
+      "NS.objects": [],
+      "$class": {
+        "UID": 3
+      }
+    },
+    {
+      "$classname": "NSMutableDictionary",
+      "$classes": [
+        "NSMutableDictionary",
+        "NSDictionary",
+        "NSObject"
+      ]
+    },
+    {
+      "$classname": "DrawingResources",
+      "$classes": [
+        "DrawingResources",
+        "NSObject"
+      ]
+    }
+  ]
+}

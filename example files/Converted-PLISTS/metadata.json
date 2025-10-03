@@ -1,0 +1,90 @@
+{
+  "$version": 100000,
+  "$archiver": "NSKeyedArchiver",
+  "$top": {
+    "root": {
+      "UID": 1
+    }
+  },
+  "$objects": [
+    "$null",
+    {
+      "NS.keys": [
+        {
+          "UID": 2
+        },
+        {
+          "UID": 3
+        },
+        {
+          "UID": 4
+        },
+        {
+          "UID": 5
+        }
+      ],
+      "NS.objects": [
+        {
+          "UID": 6
+        },
+        {
+          "UID": 7
+        },
+        {
+          "UID": 9
+        },
+        {
+          "UID": 10
+        }
+      ],
+      "$class": {
+        "UID": 11
+      }
+    },
+    "creationDate",
+    "placeholderColor",
+    "majorMinorVersion",
+    "bundleIdentifier",
+    "2025-10-02T23:49:00Z",
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 1,
+      "UIBlue": 1,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          49,
+          32,
+          49,
+          32,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 8
+      },
+      "UIRed": 1,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "UIColor",
+      "$classes": [
+        "UIColor",
+        "NSObject"
+      ],
+      "$classhints": [
+        "NSColor"
+      ]
+    },
+    "6.28",
+    "com.tophatch.Concepts",
+    {
+      "$classname": "NSDictionary",
+      "$classes": [
+        "NSDictionary",
+        "NSObject"
+      ]
+    }
+  ]
+}

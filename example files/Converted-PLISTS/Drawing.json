@@ -1,0 +1,1881 @@
+{
+  "$version": 100000,
+  "$archiver": "THFormatObjCEncoder",
+  "$top": {
+    "root": {
+      "UID": 1
+    }
+  },
+  "$objects": [
+    "$null",
+    {
+      "$class": {
+        "UID": 165
+      },
+      "paper": {
+        "UID": 4
+      },
+      "needsBackgroundImageConversion": false,
+      "centeredForNewCanvas": true,
+      "grid": {
+        "UID": 2
+      },
+      "canvasState": {
+        "UID": 6
+      },
+      "needsBackgroundImageUpgrade": false,
+      "version": 4432,
+      "pendingImportOnLoad": {
+        "UID": 0
+      }
+    },
+    {
+      "enabled": true,
+      "preset": 3,
+      "constrainToArtboard": false,
+      "$class": {
+        "UID": 3
+      }
+    },
+    {
+      "$classname": "GridConfig",
+      "$classes": [
+        "GridConfig",
+        "NSObject"
+      ]
+    },
+    {
+      "codingKeyPaperCenter": {
+        "type": "Buffer",
+        "data": [
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0,
+          0
+        ]
+      },
+      "codingKeyPaperSwitched": false,
+      "codingKeyPaperPreset": 0,
+      "$class": {
+        "UID": 5
+      }
+    },
+    {
+      "$classname": "Paper",
+      "$classes": [
+        "Paper",
+        "NSObject"
+      ]
+    },
+    {
+      "snapToLimitToActiveLayerWhileDrawing": false,
+      "longPressBehavior": 0,
+      "elementPlacements": {
+        "UID": 147
+      },
+      "transform": {
+        "UID": 124
+      },
+      "fourFingerTapOption": 11,
+      "longPressDelay": 0.4000000059604645,
+      "gridModeWhileEditing": 0,
+      "activeColorPicker": 0,
+      "snapBacktracking": false,
+      "strokeSnapToSettingEnabled": false,
+      "customColor": {
+        "UID": 32
+      },
+      "iPhoneCompactModeEnabled": true,
+      "nudge": {
+        "UID": 136
+      },
+      "brushPreviewEnabled": true,
+      "toolPresetConfigs": {
+        "UID": 33
+      },
+      "$class": {
+        "UID": 164
+      },
+      "colorHistory": {
+        "UID": 7
+      },
+      "backgroundSettings": {
+        "UID": 126
+      },
+      "measurement": {
+        "UID": 129
+      },
+      "snapToLimitToActiveLayerWhileEditing": false,
+      "slice": {
+        "UID": 145
+      },
+      "threeFingerTapOption": 6,
+      "iPadCompactModeEnabled": true,
+      "snapWobbleWhileDrawing": false,
+      "snapToLayoutSettingEnabled": true,
+      "shapeGuide": {
+        "UID": 142
+      },
+      "gridModeWhileDrawing": 1,
+      "selection": {
+        "UID": 140
+      },
+      "snapAnglesSettingEnabled": true,
+      "selectedPaletteForPresets": {
+        "UID": 31
+      },
+      "snapLockDirectionWhileDrawing": false,
+      "activePalettes": {
+        "UID": 21
+      },
+      "picker": {
+        "UID": 138
+      },
+      "snapEnabled": false,
+      "fingerAction": 4,
+      "twoFingerTapOption": 0,
+      "recentlyUsedColorsHistory": {
+        "UID": 16
+      }
+    },
+    {
+      "NS.keys": [
+        {
+          "UID": 8
+        },
+        {
+          "UID": 10
+        },
+        {
+          "UID": 11
+        }
+      ],
+      "NS.objects": [
+        {
+          "UID": 12
+        },
+        {
+          "UID": 13
+        },
+        {
+          "UID": 14
+        }
+      ],
+      "$class": {
+        "UID": 15
+      }
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.7411764860153198,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          48,
+          57,
+          52,
+          49,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          55,
+          52,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.0941176488995552,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "UIColor",
+      "$classes": [
+        "UIColor",
+        "NSObject"
+      ],
+      "$classhints": [
+        "NSColor"
+      ]
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.3450980484485626,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          57,
+          53,
+          55,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          51,
+          52,
+          53
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.95686274766922,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3176470696926117,
+      "UIBlue": 0.30980393290519714,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          51,
+          49,
+          52,
+          32,
+          48,
+          46,
+          51,
+          49,
+          56,
+          32,
+          48,
+          46,
+          51,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.3137255012989044,
+      "NSColorSpace": 2
+    },
+    14,
+    15,
+    12,
+    {
+      "$classname": "NSMutableDictionary",
+      "$classes": [
+        "NSMutableDictionary",
+        "NSDictionary",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 17
+        },
+        {
+          "UID": 18
+        },
+        {
+          "UID": 19
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.3450980484485626,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          57,
+          53,
+          55,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          51,
+          52,
+          53
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.95686274766922,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.7411764860153198,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          48,
+          57,
+          52,
+          49,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          55,
+          52,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.0941176488995552,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3176470696926117,
+      "UIBlue": 0.30980393290519714,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          51,
+          49,
+          52,
+          32,
+          48,
+          46,
+          51,
+          49,
+          56,
+          32,
+          48,
+          46,
+          51,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.3137255012989044,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "NSMutableArray",
+      "$classes": [
+        "NSMutableArray",
+        "NSArray",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 22
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    {
+      "userPaletteId": {
+        "UID": 23
+      },
+      "$class": {
+        "UID": 30
+      },
+      "userPaletteName": {
+        "UID": 24
+      },
+      "userPaletteColors": {
+        "UID": 25
+      }
+    },
+    "palette_8737F274-D396-42AB-9645-98533170CB3D",
+    "Romango",
+    {
+      "NS.objects": [
+        {
+          "UID": 26
+        },
+        {
+          "UID": 27
+        },
+        {
+          "UID": 28
+        },
+        {
+          "UID": 29
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3176470696926117,
+      "UIBlue": 0.30980393290519714,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          51,
+          49,
+          52,
+          32,
+          48,
+          46,
+          51,
+          49,
+          56,
+          32,
+          48,
+          46,
+          51,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.3137255012989044,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.3450980484485626,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          57,
+          53,
+          55,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          51,
+          52,
+          53
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.95686274766922,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.7529411911964417,
+      "UIBlue": 0.27843138575553894,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          52,
+          52,
+          51,
+          32,
+          48,
+          46,
+          55,
+          53,
+          51,
+          32,
+          48,
+          46,
+          50,
+          55,
+          56
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.4431372582912445,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.7411764860153198,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          48,
+          57,
+          52,
+          49,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          55,
+          52,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.0941176488995552,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "UserPaletteReference",
+      "$classes": [
+        "UserPaletteReference",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.keys": [],
+      "NS.objects": [],
+      "$class": {
+        "UID": 15
+      }
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0,
+      "UIBlue": 0,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          32,
+          48,
+          32,
+          48
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0,
+      "NSColorSpace": 2
+    },
+    {
+      "toolPresetConfigsConfigForPresetMap": {
+        "UID": 34
+      },
+      "toolPresetConfigsActivePreset": 5,
+      "toolPresetConfigsTemporaryToolMap": {
+        "UID": 122
+      },
+      "$class": {
+        "UID": 123
+      }
+    },
+    {
+      "NS.keys": [
+        {
+          "UID": 35
+        },
+        {
+          "UID": 36
+        },
+        {
+          "UID": 37
+        },
+        {
+          "UID": 38
+        },
+        {
+          "UID": 39
+        },
+        {
+          "UID": 40
+        },
+        {
+          "UID": 41
+        },
+        {
+          "UID": 42
+        }
+      ],
+      "NS.objects": [
+        {
+          "UID": 43
+        },
+        {
+          "UID": 52
+        },
+        {
+          "UID": 65
+        },
+        {
+          "UID": 79
+        },
+        {
+          "UID": 82
+        },
+        {
+          "UID": 92
+        },
+        {
+          "UID": 99
+        },
+        {
+          "UID": 110
+        }
+      ],
+      "$class": {
+        "UID": 15
+      }
+    },
+    5,
+    1,
+    10,
+    6,
+    2,
+    7,
+    3,
+    4,
+    {
+      "$class": {
+        "UID": 51
+      },
+      "toolPresetConfigWidthPresets": {
+        "UID": 46
+      },
+      "toolPresetConfigProperties": {
+        "UID": 44
+      }
+    },
+    {
+      "$class": {
+        "UID": 45
+      },
+      "brushWidth": 30,
+      "brushToolNew": 1029
+    },
+    {
+      "$classname": "SliceProperties",
+      "$classes": [
+        "SliceProperties",
+        "ToolProperties",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 47
+        },
+        {
+          "UID": 48
+        },
+        {
+          "UID": 49
+        },
+        {
+          "UID": 50
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    10,
+    20,
+    30,
+    40,
+    {
+      "$classname": "ToolPresetConfig",
+      "$classes": [
+        "ToolPresetConfig",
+        "NSObject"
+      ]
+    },
+    {
+      "toolPresetConfigProperties": {
+        "UID": 53
+      },
+      "toolPresetConfigAlphaPresets": {
+        "UID": 56
+      },
+      "toolPresetConfigWidthPresets": {
+        "UID": 61
+      },
+      "toolPresetConfigSmoothnessPresets": {
+        "UID": 62
+      },
+      "$class": {
+        "UID": 51
+      }
+    },
+    {
+      "brushToolNew": 8,
+      "brushWidth": 40,
+      "brushSmoothness": 0,
+      "$class": {
+        "UID": 55
+      },
+      "brushColor": {
+        "UID": 54
+      },
+      "brushAlpha": 1
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.7529411911964417,
+      "UIBlue": 0.27843138575553894,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          52,
+          52,
+          51,
+          32,
+          48,
+          46,
+          55,
+          53,
+          51,
+          32,
+          48,
+          46,
+          50,
+          55,
+          56
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.4431372582912445,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "BrushProperties",
+      "$classes": [
+        "BrushProperties",
+        "VisualProperties",
+        "ToolProperties",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 58
+        },
+        {
+          "UID": 59
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0,
+    0.5,
+    0.699999988079071,
+    1,
+    {
+      "NS.objects": [
+        {
+          "UID": 47
+        },
+        {
+          "UID": 48
+        },
+        {
+          "UID": 49
+        },
+        {
+          "UID": 50
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 63
+        },
+        {
+          "UID": 64
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.25,
+    0.5,
+    {
+      "toolPresetConfigProperties": {
+        "UID": 66
+      },
+      "toolPresetConfigAlphaPresets": {
+        "UID": 68
+      },
+      "toolPresetConfigWidthPresets": {
+        "UID": 71
+      },
+      "toolPresetConfigSmoothnessPresets": {
+        "UID": 76
+      },
+      "$class": {
+        "UID": 51
+      }
+    },
+    {
+      "brushToolNew": 16,
+      "brushWidth": 4.086239814758301,
+      "brushSmoothness": 0,
+      "$class": {
+        "UID": 55
+      },
+      "brushColor": {
+        "UID": 67
+      },
+      "brushAlpha": 1
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.3450980484485626,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          57,
+          53,
+          55,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          51,
+          52,
+          53
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.95686274766922,
+      "NSColorSpace": 2
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 69
+        },
+        {
+          "UID": 70
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.5,
+    0.699999988079071,
+    {
+      "NS.objects": [
+        {
+          "UID": 72
+        },
+        {
+          "UID": 73
+        },
+        {
+          "UID": 74
+        },
+        {
+          "UID": 75
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    2.700000047683716,
+    4.086239814758301,
+    27,
+    41,
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 77
+        },
+        {
+          "UID": 78
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.25,
+    0.5,
+    {
+      "$class": {
+        "UID": 51
+      },
+      "toolPresetConfigProperties": {
+        "UID": 80
+      }
+    },
+    {
+      "$class": {
+        "UID": 81
+      },
+      "brushToolNew": 1024
+    },
+    {
+      "$classname": "ToolProperties",
+      "$classes": [
+        "ToolProperties",
+        "NSObject"
+      ]
+    },
+    {
+      "toolPresetConfigProperties": {
+        "UID": 83
+      },
+      "toolPresetConfigAlphaPresets": {
+        "UID": 85
+      },
+      "toolPresetConfigSmoothnessPresets": {
+        "UID": 89
+      },
+      "$class": {
+        "UID": 51
+      }
+    },
+    {
+      "brushToolNew": 11,
+      "brushSmoothness": 0,
+      "$class": {
+        "UID": 55
+      },
+      "brushColor": {
+        "UID": 84
+      },
+      "brushAlpha": 0.2195650041103363
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.7411764860153198,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          48,
+          57,
+          52,
+          49,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          55,
+          52,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.0941176488995552,
+      "NSColorSpace": 2
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 86
+        },
+        {
+          "UID": 87
+        },
+        {
+          "UID": 88
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.2195650041103363,
+    0.5,
+    0.699999988079071,
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 90
+        },
+        {
+          "UID": 91
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.25,
+    0.5,
+    {
+      "toolPresetConfigAlphaPresets": {
+        "UID": 96
+      },
+      "$class": {
+        "UID": 51
+      },
+      "toolPresetConfigProperties": {
+        "UID": 93
+      }
+    },
+    {
+      "brushToolNew": 7,
+      "$class": {
+        "UID": 95
+      },
+      "brushColor": {
+        "UID": 94
+      },
+      "brushAlpha": 1
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.3450980484485626,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          57,
+          53,
+          55,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          51,
+          52,
+          53
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.95686274766922,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "TextProperties",
+      "$classes": [
+        "TextProperties",
+        "VisualProperties",
+        "ToolProperties",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 97
+        },
+        {
+          "UID": 98
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.5,
+    0.699999988079071,
+    {
+      "toolPresetConfigProperties": {
+        "UID": 100
+      },
+      "toolPresetConfigAlphaPresets": {
+        "UID": 102
+      },
+      "toolPresetConfigWidthPresets": {
+        "UID": 105
+      },
+      "toolPresetConfigSmoothnessPresets": {
+        "UID": 107
+      },
+      "$class": {
+        "UID": 51
+      }
+    },
+    {
+      "brushToolNew": 6,
+      "brushWidth": 5.76377010345459,
+      "brushSmoothness": 0,
+      "$class": {
+        "UID": 55
+      },
+      "brushColor": {
+        "UID": 101
+      },
+      "brushAlpha": 1
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.7411764860153198,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          48,
+          57,
+          52,
+          49,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          55,
+          52,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.0941176488995552,
+      "NSColorSpace": 2
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 103
+        },
+        {
+          "UID": 104
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.5,
+    0.699999988079071,
+    {
+      "NS.objects": [
+        {
+          "UID": 106
+        },
+        {
+          "UID": 47
+        },
+        {
+          "UID": 48
+        },
+        {
+          "UID": 50
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    5.76377010345459,
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 108
+        },
+        {
+          "UID": 109
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.25,
+    0.5,
+    {
+      "toolPresetConfigProperties": {
+        "UID": 111
+      },
+      "toolPresetConfigAlphaPresets": {
+        "UID": 113
+      },
+      "toolPresetConfigWidthPresets": {
+        "UID": 116
+      },
+      "toolPresetConfigSmoothnessPresets": {
+        "UID": 119
+      },
+      "$class": {
+        "UID": 51
+      }
+    },
+    {
+      "brushToolNew": 16,
+      "brushWidth": 2.0455400943756104,
+      "brushSmoothness": 0,
+      "$class": {
+        "UID": 55
+      },
+      "brushColor": {
+        "UID": 112
+      },
+      "brushAlpha": 1
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3176470696926117,
+      "UIBlue": 0.30980393290519714,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          51,
+          49,
+          52,
+          32,
+          48,
+          46,
+          51,
+          49,
+          56,
+          32,
+          48,
+          46,
+          51,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.3137255012989044,
+      "NSColorSpace": 2
+    },
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 114
+        },
+        {
+          "UID": 115
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.5,
+    0.699999988079071,
+    {
+      "NS.objects": [
+        {
+          "UID": 117
+        },
+        {
+          "UID": 118
+        },
+        {
+          "UID": 74
+        },
+        {
+          "UID": 75
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    2.0455400943756104,
+    2.700000047683716,
+    {
+      "NS.objects": [
+        {
+          "UID": 57
+        },
+        {
+          "UID": 120
+        },
+        {
+          "UID": 121
+        },
+        {
+          "UID": 60
+        }
+      ],
+      "$class": {
+        "UID": 20
+      }
+    },
+    0.25,
+    0.5,
+    {
+      "NS.keys": [],
+      "NS.objects": [],
+      "$class": {
+        "UID": 15
+      }
+    },
+    {
+      "$classname": "CanvasToolPresetConfigs",
+      "$classes": [
+        "CanvasToolPresetConfigs",
+        "NSObject"
+      ]
+    },
+    {
+      "worldOriginAtCenter": true,
+      "minimumZoomScale": 0.10000000149011612,
+      "creationInterfaceAngle": 6.2831854820251465,
+      "$class": {
+        "UID": 125
+      }
+    },
+    {
+      "$classname": "CanvasTransform",
+      "$classes": [
+        "CanvasTransform",
+        "NSObject"
+      ]
+    },
+    {
+      "drawingBackgroundColor": {
+        "UID": 127
+      },
+      "drawingBackgroundReconciled": true,
+      "drawingBackground": 0,
+      "$class": {
+        "UID": 128
+      }
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.95686274766922,
+      "UIBlue": 0.8941176533699036,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          57,
+          57,
+          54,
+          32,
+          48,
+          46,
+          57,
+          53,
+          55,
+          32,
+          48,
+          46,
+          56,
+          57,
+          52
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.9960784316062927,
+      "NSColorSpace": 2
+    },
+    {
+      "$classname": "BackgroundSettings",
+      "$classes": [
+        "BackgroundSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "customUnit": 6,
+      "swapLiveMeasurementDirection": false,
+      "enabled": false,
+      "scale": 1,
+      "$class": {
+        "UID": 135
+      },
+      "imperialDisplaySettings": {
+        "UID": 130
+      },
+      "pointsDisplaySettings0": {
+        "UID": 133
+      },
+      "pixelsDisplaySettings0": {
+        "UID": 134
+      },
+      "source0": 2,
+      "metricDisplaySettings": {
+        "UID": 132
+      }
+    },
+    {
+      "$class": {
+        "UID": 131
+      },
+      "unitFormat": 1,
+      "numberFormat": 1
+    },
+    {
+      "$classname": "MeasurementDisplaySettings",
+      "$classes": [
+        "MeasurementDisplaySettings",
+        "NSObject"
+      ]
+    },
+    {
+      "$class": {
+        "UID": 131
+      },
+      "unitFormat": 1,
+      "numberFormat": 3
+    },
+    {
+      "$class": {
+        "UID": 131
+      },
+      "unitFormat": 1,
+      "numberFormat": 2
+    },
+    {
+      "$class": {
+        "UID": 131
+      },
+      "unitFormat": 1,
+      "numberFormat": 2
+    },
+    {
+      "$classname": "MeasurementSettings",
+      "$classes": [
+        "MeasurementSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "limitToActiveLayer": false,
+      "includeLockedItems": false,
+      "includeEraserStrokes": false,
+      "$class": {
+        "UID": 137
+      }
+    },
+    {
+      "$classname": "NudgeSettings",
+      "$classes": [
+        "NudgeSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "limitToActiveLayer": false,
+      "includeLockedItems": false,
+      "colorPickerIgnoreAlpha": false,
+      "pickerMode": 2,
+      "includePartialItems": false,
+      "$class": {
+        "UID": 139
+      }
+    },
+    {
+      "$classname": "PickerSettings",
+      "$classes": [
+        "PickerSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "rotationMode": 1,
+      "scalingMode": 1,
+      "$class": {
+        "UID": 141
+      },
+      "highlightSelection": true,
+      "dragAndDropEnabled": false
+    },
+    {
+      "$classname": "SelectionSettings",
+      "$classes": [
+        "SelectionSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "$class": {
+        "UID": 144
+      },
+      "shapeGuideKind": 0,
+      "shapeGuideRotationEnabled": false,
+      "shapeGuideEnabled": false,
+      "shapeGuideScaleEnabled": false,
+      "shapeGuideStates": {
+        "UID": 143
+      }
+    },
+    {
+      "NS.keys": [],
+      "NS.objects": [],
+      "$class": {
+        "UID": 15
+      }
+    },
+    {
+      "$classname": "ShapeGuideSettings",
+      "$classes": [
+        "ShapeGuideSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "limitToActiveLayer": false,
+      "includeLockedItems": false,
+      "includeEraserStrokes": false,
+      "$class": {
+        "UID": 146
+      }
+    },
+    {
+      "$classname": "SliceSettings",
+      "$classes": [
+        "SliceSettings",
+        "NSObject"
+      ]
+    },
+    {
+      "NS.keys": [
+        {
+          "UID": 148
+        },
+        {
+          "UID": 149
+        },
+        {
+          "UID": 150
+        },
+        {
+          "UID": 151
+        },
+        {
+          "UID": 152
+        },
+        {
+          "UID": 153
+        },
+        {
+          "UID": 154
+        }
+      ],
+      "NS.objects": [
+        {
+          "UID": 155
+        },
+        {
+          "UID": 158
+        },
+        {
+          "UID": 159
+        },
+        {
+          "UID": 160
+        },
+        {
+          "UID": 161
+        },
+        {
+          "UID": 162
+        },
+        {
+          "UID": 163
+        }
+      ],
+      "$class": {
+        "UID": 15
+      }
+    },
+    5,
+    1,
+    6,
+    2,
+    7,
+    3,
+    4,
+    {
+      "hidden": false,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 0,
+      "position": 258,
+      "element": 5,
+      "expanded": false
+    },
+    "{0, 0}",
+    {
+      "$classname": "CanvasElementPlacement",
+      "$classes": [
+        "CanvasElementPlacement",
+        "NSObject"
+      ]
+    },
+    {
+      "hidden": false,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 0,
+      "position": 257,
+      "element": 1,
+      "expanded": false
+    },
+    {
+      "hidden": false,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 0,
+      "position": 257,
+      "element": 6,
+      "expanded": false
+    },
+    {
+      "hidden": false,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 2,
+      "position": 257,
+      "element": 2,
+      "expanded": true
+    },
+    {
+      "hidden": false,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 0,
+      "position": 515,
+      "element": 7,
+      "expanded": false
+    },
+    {
+      "hidden": true,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 1,
+      "position": 258,
+      "element": 3,
+      "expanded": false
+    },
+    {
+      "hidden": true,
+      "$class": {
+        "UID": 157
+      },
+      "positionAnchor": {
+        "UID": 156
+      },
+      "order": 0,
+      "position": 257,
+      "element": 4,
+      "expanded": true
+    },
+    {
+      "$classname": "CanvasState",
+      "$classes": [
+        "CanvasState",
+        "NSObject"
+      ]
+    },
+    {
+      "$classname": "Drawing",
+      "$classes": [
+        "Drawing",
+        "NSObject"
+      ]
+    }
+  ]
+}

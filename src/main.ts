@@ -1,6 +1,6 @@
 import { FileHandler } from './fileHandler.js';
 import { StrokeRenderer } from './strokeRenderer.js';
-import type { DrawingData } from './types.js';
+import type { DrawingData, ConceptPlists } from './types.js';
 
 /**
  * Main application class
@@ -12,6 +12,9 @@ class ConceptsFileViewer {
   private dropZone: HTMLElement;
   private fileInput: HTMLInputElement;
   private statusElement: HTMLElement;
+  private controlsDiv: HTMLElement;
+  private downloadButton: HTMLButtonElement;
+  private currentPlists: ConceptPlists | null = null;
 
   constructor() {
     // Get DOM elements
@@ -19,8 +22,10 @@ class ConceptsFileViewer {
     this.dropZone = document.getElementById('drop-zone') as HTMLElement;
     this.fileInput = document.getElementById('file-input') as HTMLInputElement;
     this.statusElement = document.getElementById('status') as HTMLElement;
+    this.controlsDiv = document.getElementById('controls') as HTMLElement;
+    this.downloadButton = document.getElementById('download-json') as HTMLButtonElement;
 
-    if (!this.canvas || !this.dropZone || !this.fileInput || !this.statusElement) {
+    if (!this.canvas || !this.dropZone || !this.fileInput || !this.statusElement || !this.controlsDiv || !this.downloadButton) {
       throw new Error('Required DOM elements not found');
     }
 
@@ -39,16 +44,19 @@ class ConceptsFileViewer {
     // Drag and drop
     this.fileHandler.setupDragAndDrop(
       this.dropZone,
-      (data) => this.onFileLoaded(data),
+      (data, plists) => this.onFileLoaded(data, plists),
       (error) => this.onError(error)
     );
 
     // File input
     this.fileHandler.setupFileInput(
       this.fileInput,
-      (data) => this.onFileLoaded(data),
+      (data, plists) => this.onFileLoaded(data, plists),
       (error) => this.onError(error)
     );
+
+    // Download button
+    this.downloadButton.addEventListener('click', () => this.downloadAllPlists());
 
     // Window resize
     window.addEventListener('resize', () => this.handleResize());
@@ -60,19 +68,50 @@ class ConceptsFileViewer {
     // (In a real app, you'd store the current DrawingData)
   }
 
-  private onFileLoaded(data: DrawingData): void {
+  private onFileLoaded(data: DrawingData, plists: ConceptPlists): void {
+    this.currentPlists = plists;
+
     this.statusElement.textContent = `Loaded ${data.strokes.length} strokes`;
     this.statusElement.className = 'status success';
 
-    // Hide drop zone, show canvas
+    // Hide drop zone, show canvas and controls
     this.dropZone.style.display = 'none';
     this.canvas.style.display = 'block';
+    this.controlsDiv.style.display = 'block';
 
     // Resize canvas now that it's visible
     this.renderer.resize();
 
     // Render the drawing
     this.renderer.render(data);
+  }
+
+  private downloadAllPlists(): void {
+    if (!this.currentPlists) return;
+
+    // Download each plist as a separate file
+    this.downloadPlist('Strokes.json', this.currentPlists.strokes);
+    this.downloadPlist('Drawing.json', this.currentPlists.drawing);
+    this.downloadPlist('Resources.json', this.currentPlists.resources);
+    this.downloadPlist('metadata.json', this.currentPlists.metadata);
+  }
+
+  private downloadPlist(filename: string, data: any): void {
+    if (!data) {
+      console.warn(`No data for ${filename}`);
+      return;
+    }
+
+    const json = JSON.stringify(data, null, 2);
+    const blob = new Blob([json], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = filename;
+    a.click();
+
+    URL.revokeObjectURL(url);
   }
 
   private onError(error: Error): void {
@@ -84,20 +123,11 @@ class ConceptsFileViewer {
 
 // Initialize the app when DOM is ready
 window.addEventListener('DOMContentLoaded', () => {
-  // Print startup message with clickable link
-  const port = window.location.port || '8000';
-  const url = `http://localhost:${port}`;
+  // Print startup message
   console.log(
     '%c🎨 Concepts File Viewer',
     'font-size: 16px; font-weight: bold; color: #667eea;'
   );
-  console.log(
-    '%c➜ %cLocal:   %c' + url,
-    'color: #22c55e; font-weight: bold;',
-    'color: #666;',
-    'color: #0ea5e9; text-decoration: underline;'
-  );
-  console.log('');
 
   new ConceptsFileViewer();
 });

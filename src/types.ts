@@ -4,8 +4,11 @@ export interface Point {
   y: number;
 }
 
-// A stroke is an array of points
-export type Stroke = Point[];
+// A stroke with its points and metadata
+export interface Stroke {
+  points: Point[];
+  width: number; // Brush width in points
+}
 
 // Plist object with UID reference
 export interface PlistUID {
@@ -32,4 +35,12 @@ export interface DrawingData {
     width?: number;
     height?: number;
   };
+}
+
+// All plist files from a .concept file
+export interface ConceptPlists {
+  strokes: any;
+  drawing: any;
+  resources: any;
+  metadata: any;
 }

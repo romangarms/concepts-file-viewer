@@ -1,7 +1,7 @@
 import JSZip from 'jszip';
 import * as bplistParser from 'bplist-parser';
 import { parseConceptsStrokes } from './plistParser.js';
-import type { DrawingData } from './types.js';
+import type { DrawingData, ConceptPlists } from './types.js';
 
 /**
  * Handles .concept file loading and parsing
@@ -41,13 +41,6 @@ export class FileHandler {
     }
 
     const plistData = parsed[0];
-    console.log('========== FULL PARSED PLIST ==========');
-    console.log(JSON.stringify(plistData, null, 2));
-    console.log('========================================');
-    console.log('Has $objects?', '$objects' in plistData);
-    console.log('Has $top?', '$top' in plistData);
-    console.log('Top-level keys:', Object.keys(plistData));
-
     const drawingData = parseConceptsStrokes(plistData);
 
     console.log(`Successfully loaded ${drawingData.strokes.length} strokes`);
@@ -60,7 +53,7 @@ export class FileHandler {
    */
   setupDragAndDrop(
     element: HTMLElement,
-    onFileLoaded: (data: DrawingData) => void,
+    onFileLoaded: (data: DrawingData, plists: ConceptPlists) => void,
     onError: (error: Error) => void
   ): void {
     // Prevent default drag behaviors
@@ -92,8 +85,8 @@ export class FileHandler {
       const file = files[0];
 
       try {
-        const data = await this.processConceptFile(file);
-        onFileLoaded(data);
+        const { data, plists } = await this.processConceptFileWithPlists(file);
+        onFileLoaded(data, plists);
       } catch (error) {
         onError(error instanceof Error ? error : new Error(String(error)));
       }
@@ -105,7 +98,7 @@ export class FileHandler {
    */
   setupFileInput(
     input: HTMLInputElement,
-    onFileLoaded: (data: DrawingData) => void,
+    onFileLoaded: (data: DrawingData, plists: ConceptPlists) => void,
     onError: (error: Error) => void
   ): void {
     input.addEventListener('change', async () => {
@@ -115,11 +108,56 @@ export class FileHandler {
       const file = files[0];
 
       try {
-        const data = await this.processConceptFile(file);
-        onFileLoaded(data);
+        const { data, plists } = await this.processConceptFileWithPlists(file);
+        onFileLoaded(data, plists);
       } catch (error) {
         onError(error instanceof Error ? error : new Error(String(error)));
       }
     });
+  }
+
+  /**
+   * Process file and return both drawing data and all plists
+   */
+  private async processConceptFileWithPlists(file: File): Promise<{ data: DrawingData; plists: ConceptPlists }> {
+    const drawingData = await this.processConceptFile(file);
+
+    // Parse all plist files
+    const arrayBuffer = await file.arrayBuffer();
+    const zip = await JSZip.loadAsync(arrayBuffer);
+
+    const plists: ConceptPlists = {
+      strokes: null,
+      drawing: null,
+      resources: null,
+      metadata: null,
+    };
+
+    // Helper to parse a plist file
+    const parsePlist = async (filename: string): Promise<any> => {
+      const file = zip.file(filename);
+      if (!file) {
+        console.warn(`${filename} not found in .concept file`);
+        return null;
+      }
+      try {
+        const buffer = await file.async('uint8array');
+        const parsed = await bplistParser.parseBuffer(Buffer.from(buffer));
+        return parsed[0];
+      } catch (error) {
+        console.error(`Failed to parse ${filename}:`, error);
+        return null;
+      }
+    };
+
+    // Parse all plists in parallel
+    [plists.strokes, plists.drawing, plists.resources, plists.metadata] = await Promise.all([
+      parsePlist('Strokes.plist'),
+      parsePlist('Drawing.plist'),
+      parsePlist('Resources.plist'),
+      parsePlist('metadata.plist'),
+    ]);
+
+    return { data: drawingData, plists };
   }
 }

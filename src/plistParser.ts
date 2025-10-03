@@ -61,9 +61,33 @@ function decodeGLPosition(buffer: Uint8Array): Point | null {
 }
 
 /**
+ * Extracts brush width from brushProperties object
+ */
+function extractBrushWidth(obj: PlistObject, objects: PlistObject[]): number {
+  const defaultWidth = 2.0; // Default brush width if not found
+
+  if (!('brushProperties' in obj)) {
+    return defaultWidth;
+  }
+
+  const brushPropsUID = obj['brushProperties'];
+  if (!isUID(brushPropsUID)) {
+    return defaultWidth;
+  }
+
+  const brushProps = objects[getUIDValue(brushPropsUID)];
+  if (!brushProps || !('brushWidth' in brushProps)) {
+    return defaultWidth;
+  }
+
+  const width = brushProps['brushWidth'];
+  return typeof width === 'number' ? width : defaultWidth;
+}
+
+/**
  * Attempts to extract stroke points from a stroke object
  */
-function extractStrokePoints(obj: PlistObject, objects: PlistObject[]): Stroke | null {
+function extractStrokePoints(obj: PlistObject, objects: PlistObject[]): Point[] | null {
   // Try strokePoints45 or strokePointsNonOptionalAngles fields
   for (const field of [
     STROKE_POINT_FIELDS.STROKE_POINTS_45,
@@ -117,15 +141,11 @@ function extractStrokePoints(obj: PlistObject, objects: PlistObject[]): Stroke |
  * Parses a Concepts Strokes.plist file and extracts all stroke data
  */
 export function parseConceptsStrokes(plistData: any): DrawingData {
-  console.log('parseConceptsStrokes called with:', plistData);
-
   // Check if bplist-parser already resolved the structure
   // It might return the decoded object directly instead of the raw archive format
   if (!plistData[PLIST_KEYS.OBJECTS] || !plistData[PLIST_KEYS.TOP]) {
-    console.log('Not in archive format, checking for direct structure...');
     // Try to work with already-decoded structure
     if (plistData[PLIST_KEYS.ROOT]) {
-      console.log('Found root directly');
       plistData = { [PLIST_KEYS.TOP]: { [PLIST_KEYS.ROOT]: plistData } };
     } else {
       throw new Error('Invalid plist structure: missing $objects and $top, and no root found');
@@ -135,20 +155,15 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
   const objects = plistData[PLIST_KEYS.OBJECTS];
   const rootUID = plistData[PLIST_KEYS.TOP]?.[PLIST_KEYS.ROOT];
 
-  console.log('objects:', objects);
-  console.log('rootUID:', rootUID);
-
   if (!rootUID) {
     throw new Error('Invalid plist structure: no root in $top');
   }
 
   // Handle case where bplist-parser already resolved UIDs
   const root = isUID(rootUID) ? objects[getUIDValue(rootUID)] : rootUID;
-  console.log('root:', root);
 
   const groupLayerRef = root[PLIST_KEYS.ROOT_GROUP_LAYERS];
   const groupLayer = isUID(groupLayerRef) ? objects[getUIDValue(groupLayerRef)] : groupLayerRef;
-  console.log('groupLayer:', groupLayer);
 
   const groupItems = groupLayer[PLIST_KEYS.NS_OBJECTS];
 
@@ -177,7 +192,8 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
 
       const points = extractStrokePoints(obj, objects);
       if (points && points.length > 0) {
-        strokes.push(points);
+        const width = extractBrushWidth(obj, objects);
+        strokes.push({ points, width });
       }
     }
   }
