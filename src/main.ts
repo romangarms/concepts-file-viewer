@@ -6,14 +6,14 @@ import type { DrawingData, ConceptPlists } from './types.js';
  * Main application class
  */
 class ConceptsFileViewer {
-  private fileHandler: FileHandler;
-  private renderer: StrokeRenderer;
-  private canvas: HTMLCanvasElement;
-  private dropZone: HTMLElement;
-  private fileInput: HTMLInputElement;
-  private statusElement: HTMLElement;
-  private controlsDiv: HTMLElement;
-  private downloadButton: HTMLButtonElement;
+  private readonly fileHandler: FileHandler;
+  private readonly renderer: StrokeRenderer;
+  private readonly canvas: HTMLCanvasElement;
+  private readonly dropZone: HTMLElement;
+  private readonly fileInput: HTMLInputElement;
+  private readonly statusElement: HTMLElement;
+  private readonly controlsDiv: HTMLElement;
+  private readonly downloadButton: HTMLButtonElement;
   private currentPlists: ConceptPlists | null = null;
 
   constructor() {

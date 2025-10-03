@@ -4,10 +4,19 @@ export interface Point {
   y: number;
 }
 
+// RGB color
+export interface Color {
+  r: number; // 0-1
+  g: number; // 0-1
+  b: number; // 0-1
+  a: number; // 0-1 (alpha)
+}
+
 // A stroke with its points and metadata
 export interface Stroke {
   points: Point[];
   width: number; // Brush width in points
+  color: Color;  // Brush color
 }
 
 // Plist object with UID reference

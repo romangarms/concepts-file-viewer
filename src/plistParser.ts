@@ -5,7 +5,7 @@ import {
   POINT_STRIDE,
   XY_COMPONENTS,
 } from './constants.js';
-import type { ConceptsPlist, Stroke, Point, PlistObject, PlistUID, DrawingData } from './types.js';
+import type { ConceptsPlist, Stroke, Point, PlistObject, PlistUID, DrawingData, Color } from './types.js';
 
 /**
  * Checks if a value is a UID reference object
@@ -82,6 +82,45 @@ function extractBrushWidth(obj: PlistObject, objects: PlistObject[]): number {
 
   const width = brushProps['brushWidth'];
   return typeof width === 'number' ? width : defaultWidth;
+}
+
+/**
+ * Extracts brush color from brushProperties object
+ */
+function extractBrushColor(obj: PlistObject, objects: PlistObject[]): Color {
+  const defaultColor: Color = { r: 0, g: 0, b: 0, a: 1 }; // Default black
+
+  if (!('brushProperties' in obj)) {
+    return defaultColor;
+  }
+
+  const brushPropsUID = obj['brushProperties'];
+  if (!isUID(brushPropsUID)) {
+    return defaultColor;
+  }
+
+  const brushProps = objects[getUIDValue(brushPropsUID)];
+  if (!brushProps || !('brushColor' in brushProps)) {
+    return defaultColor;
+  }
+
+  const brushColorUID = brushProps['brushColor'];
+  if (!isUID(brushColorUID)) {
+    return defaultColor;
+  }
+
+  const colorObj = objects[getUIDValue(brushColorUID)];
+  if (!colorObj) {
+    return defaultColor;
+  }
+
+  // Extract RGB values (they're in 0-1 range)
+  const r = typeof colorObj['UIRed'] === 'number' ? colorObj['UIRed'] : 0;
+  const g = typeof colorObj['UIGreen'] === 'number' ? colorObj['UIGreen'] : 0;
+  const b = typeof colorObj['UIBlue'] === 'number' ? colorObj['UIBlue'] : 0;
+  const a = typeof colorObj['UIAlpha'] === 'number' ? colorObj['UIAlpha'] : 1;
+
+  return { r, g, b, a };
 }
 
 /**
@@ -193,7 +232,8 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
       const points = extractStrokePoints(obj, objects);
       if (points && points.length > 0) {
         const width = extractBrushWidth(obj, objects);
-        strokes.push({ points, width });
+        const color = extractBrushColor(obj, objects);
+        strokes.push({ points, width, color });
       }
     }
   }

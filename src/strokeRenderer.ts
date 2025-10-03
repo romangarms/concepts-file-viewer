@@ -71,7 +71,6 @@ export class StrokeRenderer {
     this.offsetY = padding - bounds.minY * this.scale;
 
     // Render each stroke
-    this.ctx.strokeStyle = '#000000';
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
 
@@ -88,6 +87,12 @@ export class StrokeRenderer {
 
     // Set stroke width (scale it with the drawing)
     this.ctx.lineWidth = stroke.width * this.scale;
+
+    // Set stroke color (convert 0-1 range to 0-255)
+    const r = Math.round(stroke.color.r * 255);
+    const g = Math.round(stroke.color.g * 255);
+    const b = Math.round(stroke.color.b * 255);
+    this.ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${stroke.color.a})`;
 
     this.ctx.beginPath();
 
