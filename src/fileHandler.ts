@@ -1,7 +1,12 @@
 import JSZip from 'jszip';
-import * as bplistParser from 'bplist-parser';
 import { parseConceptsStrokes } from './plistParser.js';
 import type { DrawingData, ConceptPlists } from './types.js';
+
+// Use require to get mutable reference to bplist-parser
+const bplistParser = require('bplist-parser');
+
+// Increase maxObjectCount to handle large documents (default is 32768)
+bplistParser.maxObjectCount = 1000000;
 
 /**
  * Handles .concept file loading and parsing
