@@ -13,14 +13,42 @@
         "UID": 2
       },
       "$class": {
-        "UID": 4
+        "UID": 9
       }
     },
+    {
+      "NS.keys": [
+        {
+          "UID": 3
+        }
+      ],
+      "NS.objects": [
+        {
+          "UID": 4
+        }
+      ],
+      "$class": {
+        "UID": 7
+      }
+    },
+    "813ba0b5-f089-4b8a-b2ee-923bfa016b80",
+    {
+      "resourceExtension": {
+        "UID": 5
+      },
+      "$class": {
+        "UID": 8
+      },
+      "resourceAttributes": {
+        "UID": 6
+      }
+    },
+    "jpg",
     {
       "NS.keys": [],
       "NS.objects": [],
       "$class": {
-        "UID": 3
+        "UID": 7
       }
     },
     {
@@ -28,6 +56,13 @@
       "$classes": [
         "NSMutableDictionary",
         "NSDictionary",
+        "NSObject"
+      ]
+    },
+    {
+      "$classname": "DrawingResource",
+      "$classes": [
+        "DrawingResource",
         "NSObject"
       ]
     },

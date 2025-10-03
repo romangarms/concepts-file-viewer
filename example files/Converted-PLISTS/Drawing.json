@@ -10,7 +10,7 @@
     "$null",
     {
       "$class": {
-        "UID": 165
+        "UID": 168
       },
       "paper": {
         "UID": 4
@@ -75,10 +75,10 @@
       "snapToLimitToActiveLayerWhileDrawing": false,
       "longPressBehavior": 0,
       "elementPlacements": {
-        "UID": 147
+        "UID": 151
       },
       "transform": {
-        "UID": 124
+        "UID": 127
       },
       "fourFingerTapOption": 11,
       "longPressDelay": 0.4000000059604645,
@@ -87,59 +87,59 @@
       "snapBacktracking": false,
       "strokeSnapToSettingEnabled": false,
       "customColor": {
-        "UID": 32
+        "UID": 35
       },
       "iPhoneCompactModeEnabled": true,
       "nudge": {
-        "UID": 136
+        "UID": 140
       },
       "brushPreviewEnabled": true,
       "toolPresetConfigs": {
-        "UID": 33
+        "UID": 36
       },
       "$class": {
-        "UID": 164
+        "UID": 167
       },
       "colorHistory": {
         "UID": 7
       },
       "backgroundSettings": {
-        "UID": 126
+        "UID": 130
       },
       "measurement": {
-        "UID": 129
+        "UID": 133
       },
       "snapToLimitToActiveLayerWhileEditing": false,
       "slice": {
-        "UID": 145
+        "UID": 149
       },
       "threeFingerTapOption": 6,
       "iPadCompactModeEnabled": true,
       "snapWobbleWhileDrawing": false,
       "snapToLayoutSettingEnabled": true,
       "shapeGuide": {
-        "UID": 142
+        "UID": 146
       },
       "gridModeWhileDrawing": 1,
       "selection": {
-        "UID": 140
+        "UID": 144
       },
       "snapAnglesSettingEnabled": true,
       "selectedPaletteForPresets": {
-        "UID": 31
+        "UID": 34
       },
       "snapLockDirectionWhileDrawing": false,
       "activePalettes": {
-        "UID": 21
+        "UID": 24
       },
       "picker": {
-        "UID": 138
+        "UID": 142
       },
       "snapEnabled": false,
       "fingerAction": 4,
       "twoFingerTapOption": 0,
       "recentlyUsedColorsHistory": {
-        "UID": 16
+        "UID": 18
       }
     },
     {
@@ -152,55 +152,60 @@
         },
         {
           "UID": 11
+        },
+        {
+          "UID": 12
         }
       ],
       "NS.objects": [
-        {
-          "UID": 12
-        },
         {
           "UID": 13
         },
         {
           "UID": 14
+        },
+        {
+          "UID": 15
+        },
+        {
+          "UID": 16
         }
       ],
       "$class": {
-        "UID": 15
+        "UID": 17
       }
     },
     {
       "UIColorComponentCount": 4,
-      "UIGreen": 0.3686274588108063,
-      "UIBlue": 0.7411764860153198,
+      "UIGreen": 0.7529411911964417,
+      "UIBlue": 0.27843138575553894,
       "UIAlpha": 1,
       "NSRGB": {
         "type": "Buffer",
         "data": [
           48,
           46,
-          48,
-          57,
           52,
-          49,
-          32,
-          48,
-          46,
+          52,
           51,
-          54,
-          57,
           32,
           48,
           46,
           55,
-          52,
-          49
+          53,
+          51,
+          32,
+          48,
+          46,
+          50,
+          55,
+          56
         ]
       },
       "$class": {
         "UID": 9
       },
-      "UIRed": 0.0941176488995552,
+      "UIRed": 0.4431372582912445,
       "NSColorSpace": 2
     },
     {
@@ -216,6 +221,40 @@
     {
       "UIColorComponentCount": 4,
       "UIGreen": 0.3686274588108063,
+      "UIBlue": 0.7411764860153198,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          48,
+          57,
+          52,
+          49,
+          32,
+          48,
+          46,
+          51,
+          54,
+          57,
+          32,
+          48,
+          46,
+          55,
+          52,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.0941176488995552,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3686274588108063,
       "UIBlue": 0.3450980484485626,
       "UIAlpha": 1,
       "NSRGB": {
@@ -278,9 +317,10 @@
       "UIRed": 0.3137255012989044,
       "NSColorSpace": 2
     },
-    14,
-    15,
-    12,
+    4,
+    16,
+    21,
+    17,
     {
       "$classname": "NSMutableDictionary",
       "$classes": [
@@ -292,18 +332,53 @@
     {
       "NS.objects": [
         {
-          "UID": 17
-        },
-        {
-          "UID": 18
-        },
-        {
           "UID": 19
+        },
+        {
+          "UID": 20
+        },
+        {
+          "UID": 21
+        },
+        {
+          "UID": 22
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.3176470696926117,
+      "UIBlue": 0.30980393290519714,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          51,
+          49,
+          52,
+          32,
+          48,
+          46,
+          51,
+          49,
+          56,
+          32,
+          48,
+          46,
+          51,
+          49
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.3137255012989044,
+      "NSColorSpace": 2
     },
     {
       "UIColorComponentCount": 4,
@@ -336,6 +411,39 @@
         "UID": 9
       },
       "UIRed": 0.95686274766922,
+      "NSColorSpace": 2
+    },
+    {
+      "UIColorComponentCount": 4,
+      "UIGreen": 0.7529411911964417,
+      "UIBlue": 0.27843138575553894,
+      "UIAlpha": 1,
+      "NSRGB": {
+        "type": "Buffer",
+        "data": [
+          48,
+          46,
+          52,
+          52,
+          51,
+          32,
+          48,
+          46,
+          55,
+          53,
+          51,
+          32,
+          48,
+          46,
+          50,
+          55,
+          56
+        ]
+      },
+      "$class": {
+        "UID": 9
+      },
+      "UIRed": 0.4431372582912445,
       "NSColorSpace": 2
     },
     {
@@ -373,38 +481,6 @@
       "NSColorSpace": 2
     },
     {
-      "UIColorComponentCount": 4,
-      "UIGreen": 0.3176470696926117,
-      "UIBlue": 0.30980393290519714,
-      "UIAlpha": 1,
-      "NSRGB": {
-        "type": "Buffer",
-        "data": [
-          48,
-          46,
-          51,
-          49,
-          52,
-          32,
-          48,
-          46,
-          51,
-          49,
-          56,
-          32,
-          48,
-          46,
-          51,
-          49
-        ]
-      },
-      "$class": {
-        "UID": 9
-      },
-      "UIRed": 0.3137255012989044,
-      "NSColorSpace": 2
-    },
-    {
       "$classname": "NSMutableArray",
       "$classes": [
         "NSMutableArray",
@@ -415,25 +491,25 @@
     {
       "NS.objects": [
         {
-          "UID": 22
+          "UID": 25
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     {
       "userPaletteId": {
-        "UID": 23
+        "UID": 26
       },
       "$class": {
-        "UID": 30
+        "UID": 33
       },
       "userPaletteName": {
-        "UID": 24
+        "UID": 27
       },
       "userPaletteColors": {
-        "UID": 25
+        "UID": 28
       }
     },
     "palette_8737F274-D396-42AB-9645-98533170CB3D",
@@ -441,20 +517,20 @@
     {
       "NS.objects": [
         {
-          "UID": 26
-        },
-        {
-          "UID": 27
-        },
-        {
-          "UID": 28
-        },
-        {
           "UID": 29
+        },
+        {
+          "UID": 30
+        },
+        {
+          "UID": 31
+        },
+        {
+          "UID": 32
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     {
@@ -600,7 +676,7 @@
       "NS.keys": [],
       "NS.objects": [],
       "$class": {
-        "UID": 15
+        "UID": 17
       }
     },
     {
@@ -626,27 +702,18 @@
     },
     {
       "toolPresetConfigsConfigForPresetMap": {
-        "UID": 34
+        "UID": 37
       },
-      "toolPresetConfigsActivePreset": 5,
+      "toolPresetConfigsActivePreset": 4,
       "toolPresetConfigsTemporaryToolMap": {
-        "UID": 122
+        "UID": 125
       },
       "$class": {
-        "UID": 123
+        "UID": 126
       }
     },
     {
       "NS.keys": [
-        {
-          "UID": 35
-        },
-        {
-          "UID": 36
-        },
-        {
-          "UID": 37
-        },
         {
           "UID": 38
         },
@@ -661,36 +728,45 @@
         },
         {
           "UID": 42
-        }
-      ],
-      "NS.objects": [
+        },
         {
           "UID": 43
         },
         {
-          "UID": 52
+          "UID": 44
         },
         {
-          "UID": 65
+          "UID": 45
+        }
+      ],
+      "NS.objects": [
+        {
+          "UID": 46
         },
         {
-          "UID": 79
+          "UID": 55
+        },
+        {
+          "UID": 68
         },
         {
           "UID": 82
         },
         {
-          "UID": 92
+          "UID": 85
         },
         {
-          "UID": 99
+          "UID": 95
         },
         {
-          "UID": 110
+          "UID": 102
+        },
+        {
+          "UID": 113
         }
       ],
       "$class": {
-        "UID": 15
+        "UID": 17
       }
     },
     5,
@@ -703,18 +779,18 @@
     4,
     {
       "$class": {
-        "UID": 51
+        "UID": 54
       },
       "toolPresetConfigWidthPresets": {
-        "UID": 46
+        "UID": 49
       },
       "toolPresetConfigProperties": {
-        "UID": 44
+        "UID": 47
       }
     },
     {
       "$class": {
-        "UID": 45
+        "UID": 48
       },
       "brushWidth": 30,
       "brushToolNew": 1029
@@ -730,20 +806,20 @@
     {
       "NS.objects": [
         {
-          "UID": 47
-        },
-        {
-          "UID": 48
-        },
-        {
-          "UID": 49
-        },
-        {
           "UID": 50
+        },
+        {
+          "UID": 51
+        },
+        {
+          "UID": 52
+        },
+        {
+          "UID": 53
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     10,
@@ -759,19 +835,19 @@
     },
     {
       "toolPresetConfigProperties": {
-        "UID": 53
-      },
-      "toolPresetConfigAlphaPresets": {
         "UID": 56
       },
+      "toolPresetConfigAlphaPresets": {
+        "UID": 59
+      },
       "toolPresetConfigWidthPresets": {
-        "UID": 61
+        "UID": 64
       },
       "toolPresetConfigSmoothnessPresets": {
-        "UID": 62
+        "UID": 65
       },
       "$class": {
-        "UID": 51
+        "UID": 54
       }
     },
     {
@@ -779,10 +855,10 @@
       "brushWidth": 40,
       "brushSmoothness": 0,
       "$class": {
-        "UID": 55
+        "UID": 58
       },
       "brushColor": {
-        "UID": 54
+        "UID": 57
       },
       "brushAlpha": 1
     },
@@ -831,20 +907,20 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 58
-        },
-        {
-          "UID": 59
-        },
-        {
           "UID": 60
+        },
+        {
+          "UID": 61
+        },
+        {
+          "UID": 62
+        },
+        {
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0,
@@ -854,58 +930,58 @@
     {
       "NS.objects": [
         {
-          "UID": 47
-        },
-        {
-          "UID": 48
-        },
-        {
-          "UID": 49
-        },
-        {
           "UID": 50
+        },
+        {
+          "UID": 51
+        },
+        {
+          "UID": 52
+        },
+        {
+          "UID": 53
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     {
       "NS.objects": [
         {
-          "UID": 57
+          "UID": 60
+        },
+        {
+          "UID": 66
+        },
+        {
+          "UID": 67
         },
         {
           "UID": 63
-        },
-        {
-          "UID": 64
-        },
-        {
-          "UID": 60
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.25,
     0.5,
     {
       "toolPresetConfigProperties": {
-        "UID": 66
+        "UID": 69
       },
       "toolPresetConfigAlphaPresets": {
-        "UID": 68
-      },
-      "toolPresetConfigWidthPresets": {
         "UID": 71
       },
+      "toolPresetConfigWidthPresets": {
+        "UID": 74
+      },
       "toolPresetConfigSmoothnessPresets": {
-        "UID": 76
+        "UID": 79
       },
       "$class": {
-        "UID": 51
+        "UID": 54
       }
     },
     {
@@ -913,10 +989,10 @@
       "brushWidth": 4.086239814758301,
       "brushSmoothness": 0,
       "$class": {
-        "UID": 55
+        "UID": 58
       },
       "brushColor": {
-        "UID": 67
+        "UID": 70
       },
       "brushAlpha": 1
     },
@@ -956,26 +1032,8 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 69
-        },
-        {
-          "UID": 70
-        },
-        {
           "UID": 60
-        }
-      ],
-      "$class": {
-        "UID": 20
-      }
-    },
-    0.5,
-    0.699999988079071,
-    {
-      "NS.objects": [
+        },
         {
           "UID": 72
         },
@@ -983,14 +1041,32 @@
           "UID": 73
         },
         {
-          "UID": 74
-        },
-        {
-          "UID": 75
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
+      }
+    },
+    0.5,
+    0.699999988079071,
+    {
+      "NS.objects": [
+        {
+          "UID": 75
+        },
+        {
+          "UID": 76
+        },
+        {
+          "UID": 77
+        },
+        {
+          "UID": 78
+        }
+      ],
+      "$class": {
+        "UID": 23
       }
     },
     2.700000047683716,
@@ -1000,35 +1076,35 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 77
-        },
-        {
-          "UID": 78
-        },
-        {
           "UID": 60
+        },
+        {
+          "UID": 80
+        },
+        {
+          "UID": 81
+        },
+        {
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.25,
     0.5,
     {
       "$class": {
-        "UID": 51
+        "UID": 54
       },
       "toolPresetConfigProperties": {
-        "UID": 80
+        "UID": 83
       }
     },
     {
       "$class": {
-        "UID": 81
+        "UID": 84
       },
       "brushToolNew": 1024
     },
@@ -1041,26 +1117,26 @@
     },
     {
       "toolPresetConfigProperties": {
-        "UID": 83
+        "UID": 86
       },
       "toolPresetConfigAlphaPresets": {
-        "UID": 85
+        "UID": 88
       },
       "toolPresetConfigSmoothnessPresets": {
-        "UID": 89
+        "UID": 92
       },
       "$class": {
-        "UID": 51
+        "UID": 54
       }
     },
     {
       "brushToolNew": 11,
       "brushSmoothness": 0,
       "$class": {
-        "UID": 55
+        "UID": 58
       },
       "brushColor": {
-        "UID": 84
+        "UID": 87
       },
       "brushAlpha": 0.2195650041103363
     },
@@ -1101,20 +1177,20 @@
     {
       "NS.objects": [
         {
-          "UID": 57
+          "UID": 60
         },
         {
-          "UID": 86
+          "UID": 89
         },
         {
-          "UID": 87
+          "UID": 90
         },
         {
-          "UID": 88
+          "UID": 91
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.2195650041103363,
@@ -1123,76 +1199,76 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 90
-        },
-        {
-          "UID": 91
-        },
-        {
           "UID": 60
+        },
+        {
+          "UID": 93
+        },
+        {
+          "UID": 94
+        },
+        {
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.25,
     0.5,
     {
       "toolPresetConfigAlphaPresets": {
-        "UID": 96
+        "UID": 99
       },
       "$class": {
-        "UID": 51
+        "UID": 54
       },
       "toolPresetConfigProperties": {
-        "UID": 93
+        "UID": 96
       }
     },
     {
       "brushToolNew": 7,
       "$class": {
-        "UID": 95
+        "UID": 98
       },
       "brushColor": {
-        "UID": 94
+        "UID": 97
       },
       "brushAlpha": 1
     },
     {
       "UIColorComponentCount": 4,
-      "UIGreen": 0.3686274588108063,
-      "UIBlue": 0.3450980484485626,
+      "UIGreen": 0.7529411911964417,
+      "UIBlue": 0.27843138575553894,
       "UIAlpha": 1,
       "NSRGB": {
         "type": "Buffer",
         "data": [
           48,
           46,
-          57,
-          53,
-          55,
-          32,
-          48,
-          46,
-          51,
-          54,
-          57,
-          32,
-          48,
-          46,
-          51,
           52,
-          53
+          52,
+          51,
+          32,
+          48,
+          46,
+          55,
+          53,
+          51,
+          32,
+          48,
+          46,
+          50,
+          55,
+          56
         ]
       },
       "$class": {
         "UID": 9
       },
-      "UIRed": 0.95686274766922,
+      "UIRed": 0.4431372582912445,
       "NSColorSpace": 2
     },
     {
@@ -1207,39 +1283,39 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 97
-        },
-        {
-          "UID": 98
-        },
-        {
           "UID": 60
+        },
+        {
+          "UID": 100
+        },
+        {
+          "UID": 101
+        },
+        {
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.5,
     0.699999988079071,
     {
       "toolPresetConfigProperties": {
-        "UID": 100
+        "UID": 103
       },
       "toolPresetConfigAlphaPresets": {
-        "UID": 102
-      },
-      "toolPresetConfigWidthPresets": {
         "UID": 105
       },
+      "toolPresetConfigWidthPresets": {
+        "UID": 108
+      },
       "toolPresetConfigSmoothnessPresets": {
-        "UID": 107
+        "UID": 110
       },
       "$class": {
-        "UID": 51
+        "UID": 54
       }
     },
     {
@@ -1247,10 +1323,10 @@
       "brushWidth": 5.76377010345459,
       "brushSmoothness": 0,
       "$class": {
-        "UID": 55
+        "UID": 58
       },
       "brushColor": {
-        "UID": 101
+        "UID": 104
       },
       "brushAlpha": 1
     },
@@ -1291,20 +1367,20 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 103
-        },
-        {
-          "UID": 104
-        },
-        {
           "UID": 60
+        },
+        {
+          "UID": 106
+        },
+        {
+          "UID": 107
+        },
+        {
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.5,
@@ -1312,59 +1388,59 @@
     {
       "NS.objects": [
         {
-          "UID": 106
-        },
-        {
-          "UID": 47
-        },
-        {
-          "UID": 48
+          "UID": 109
         },
         {
           "UID": 50
+        },
+        {
+          "UID": 51
+        },
+        {
+          "UID": 53
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     5.76377010345459,
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 108
-        },
-        {
-          "UID": 109
-        },
-        {
           "UID": 60
+        },
+        {
+          "UID": 111
+        },
+        {
+          "UID": 112
+        },
+        {
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
     0.25,
     0.5,
     {
       "toolPresetConfigProperties": {
-        "UID": 111
+        "UID": 114
       },
       "toolPresetConfigAlphaPresets": {
-        "UID": 113
-      },
-      "toolPresetConfigWidthPresets": {
         "UID": 116
       },
-      "toolPresetConfigSmoothnessPresets": {
+      "toolPresetConfigWidthPresets": {
         "UID": 119
       },
+      "toolPresetConfigSmoothnessPresets": {
+        "UID": 122
+      },
       "$class": {
-        "UID": 51
+        "UID": 54
       }
     },
     {
@@ -1372,10 +1448,10 @@
       "brushWidth": 2.0455400943756104,
       "brushSmoothness": 0,
       "$class": {
-        "UID": 55
+        "UID": 58
       },
       "brushColor": {
-        "UID": 112
+        "UID": 115
       },
       "brushAlpha": 1
     },
@@ -1414,26 +1490,8 @@
     {
       "NS.objects": [
         {
-          "UID": 57
-        },
-        {
-          "UID": 114
-        },
-        {
-          "UID": 115
-        },
-        {
           "UID": 60
-        }
-      ],
-      "$class": {
-        "UID": 20
-      }
-    },
-    0.5,
-    0.699999988079071,
-    {
-      "NS.objects": [
+        },
         {
           "UID": 117
         },
@@ -1441,23 +1499,17 @@
           "UID": 118
         },
         {
-          "UID": 74
-        },
-        {
-          "UID": 75
+          "UID": 63
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
       }
     },
-    2.0455400943756104,
-    2.700000047683716,
+    0.5,
+    0.699999988079071,
     {
       "NS.objects": [
-        {
-          "UID": 57
-        },
         {
           "UID": 120
         },
@@ -1465,11 +1517,35 @@
           "UID": 121
         },
         {
-          "UID": 60
+          "UID": 77
+        },
+        {
+          "UID": 78
         }
       ],
       "$class": {
-        "UID": 20
+        "UID": 23
+      }
+    },
+    2.0455400943756104,
+    2.700000047683716,
+    {
+      "NS.objects": [
+        {
+          "UID": 60
+        },
+        {
+          "UID": 123
+        },
+        {
+          "UID": 124
+        },
+        {
+          "UID": 63
+        }
+      ],
+      "$class": {
+        "UID": 23
       }
     },
     0.25,
@@ -1478,7 +1554,7 @@
       "NS.keys": [],
       "NS.objects": [],
       "$class": {
-        "UID": 15
+        "UID": 17
       }
     },
     {
@@ -1490,12 +1566,16 @@
     },
     {
       "worldOriginAtCenter": true,
+      "savedTransform": {
+        "UID": 128
+      },
       "minimumZoomScale": 0.10000000149011612,
       "creationInterfaceAngle": 6.2831854820251465,
       "$class": {
-        "UID": 125
+        "UID": 129
       }
     },
+    "[0.52944421768188477, 0, 0, 0.52944421768188477, -60.132865905761719, 67.890884399414062]",
     {
       "$classname": "CanvasTransform",
       "$classes": [
@@ -1505,12 +1585,12 @@
     },
     {
       "drawingBackgroundColor": {
-        "UID": 127
+        "UID": 131
       },
       "drawingBackgroundReconciled": true,
       "drawingBackground": 0,
       "$class": {
-        "UID": 128
+        "UID": 132
       }
     },
     {
@@ -1559,25 +1639,25 @@
       "enabled": false,
       "scale": 1,
       "$class": {
-        "UID": 135
+        "UID": 139
       },
       "imperialDisplaySettings": {
-        "UID": 130
+        "UID": 134
       },
       "pointsDisplaySettings0": {
-        "UID": 133
+        "UID": 137
       },
       "pixelsDisplaySettings0": {
-        "UID": 134
+        "UID": 138
       },
       "source0": 2,
       "metricDisplaySettings": {
-        "UID": 132
+        "UID": 136
       }
     },
     {
       "$class": {
-        "UID": 131
+        "UID": 135
       },
       "unitFormat": 1,
       "numberFormat": 1
@@ -1591,21 +1671,21 @@
     },
     {
       "$class": {
-        "UID": 131
+        "UID": 135
       },
       "unitFormat": 1,
       "numberFormat": 3
     },
     {
       "$class": {
-        "UID": 131
+        "UID": 135
       },
       "unitFormat": 1,
       "numberFormat": 2
     },
     {
       "$class": {
-        "UID": 131
+        "UID": 135
       },
       "unitFormat": 1,
       "numberFormat": 2
@@ -1622,7 +1702,7 @@
       "includeLockedItems": false,
       "includeEraserStrokes": false,
       "$class": {
-        "UID": 137
+        "UID": 141
       }
     },
     {
@@ -1639,7 +1719,7 @@
       "pickerMode": 2,
       "includePartialItems": false,
       "$class": {
-        "UID": 139
+        "UID": 143
       }
     },
     {
@@ -1653,7 +1733,7 @@
       "rotationMode": 1,
       "scalingMode": 1,
       "$class": {
-        "UID": 141
+        "UID": 145
       },
       "highlightSelection": true,
       "dragAndDropEnabled": false
@@ -1667,21 +1747,21 @@
     },
     {
       "$class": {
-        "UID": 144
+        "UID": 148
       },
       "shapeGuideKind": 0,
       "shapeGuideRotationEnabled": false,
       "shapeGuideEnabled": false,
       "shapeGuideScaleEnabled": false,
       "shapeGuideStates": {
-        "UID": 143
+        "UID": 147
       }
     },
     {
       "NS.keys": [],
       "NS.objects": [],
       "$class": {
-        "UID": 15
+        "UID": 17
       }
     },
     {
@@ -1696,7 +1776,7 @@
       "includeLockedItems": false,
       "includeEraserStrokes": false,
       "$class": {
-        "UID": 146
+        "UID": 150
       }
     },
     {
@@ -1709,18 +1789,6 @@
     {
       "NS.keys": [
         {
-          "UID": 148
-        },
-        {
-          "UID": 149
-        },
-        {
-          "UID": 150
-        },
-        {
-          "UID": 151
-        },
-        {
           "UID": 152
         },
         {
@@ -1728,20 +1796,23 @@
         },
         {
           "UID": 154
-        }
-      ],
-      "NS.objects": [
+        },
         {
           "UID": 155
         },
         {
+          "UID": 156
+        },
+        {
+          "UID": 157
+        },
+        {
+          "UID": 13
+        }
+      ],
+      "NS.objects": [
+        {
           "UID": 158
-        },
-        {
-          "UID": 159
-        },
-        {
-          "UID": 160
         },
         {
           "UID": 161
@@ -1751,10 +1822,19 @@
         },
         {
           "UID": 163
+        },
+        {
+          "UID": 164
+        },
+        {
+          "UID": 165
+        },
+        {
+          "UID": 166
         }
       ],
       "$class": {
-        "UID": 15
+        "UID": 17
       }
     },
     5,
@@ -1763,14 +1843,13 @@
     2,
     7,
     3,
-    4,
     {
       "hidden": false,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 0,
       "position": 258,
@@ -1788,10 +1867,10 @@
     {
       "hidden": false,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 0,
       "position": 257,
@@ -1801,10 +1880,10 @@
     {
       "hidden": false,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 0,
       "position": 257,
@@ -1814,10 +1893,10 @@
     {
       "hidden": false,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 2,
       "position": 257,
@@ -1827,10 +1906,10 @@
     {
       "hidden": false,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 0,
       "position": 515,
@@ -1840,10 +1919,10 @@
     {
       "hidden": true,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 1,
       "position": 258,
@@ -1853,10 +1932,10 @@
     {
       "hidden": true,
       "$class": {
-        "UID": 157
+        "UID": 160
       },
       "positionAnchor": {
-        "UID": 156
+        "UID": 159
       },
       "order": 0,
       "position": 257,

@@ -1,8 +1,8 @@
 import type { Stroke, DrawingData } from './types.js';
 
 export class StrokeRenderer {
-  private canvas: HTMLCanvasElement;
-  private ctx: CanvasRenderingContext2D;
+  private readonly canvas: HTMLCanvasElement;
+  private readonly ctx: CanvasRenderingContext2D;
   private scale: number = 1;
   private offsetX: number = 0;
   private offsetY: number = 0;
@@ -17,7 +17,23 @@ export class StrokeRenderer {
   }
 
   /**
+   * Apply transform to a point
+   */
+  private transformPoint(point: { x: number; y: number }, transform?: import('./types.js').Transform): { x: number; y: number } {
+    if (!transform) {
+      return point;
+    }
+
+    const { a, b, c, d, tx, ty } = transform;
+    return {
+      x: a * point.x + c * point.y + tx,
+      y: b * point.x + d * point.y + ty,
+    };
+  }
+
+  /**
    * Calculate bounds of all strokes to fit them in the viewport
+   * Takes transforms into account
    */
   private calculateBounds(strokes: Stroke[]): { minX: number; minY: number; maxX: number; maxY: number } {
     let minX = Infinity;
@@ -27,10 +43,13 @@ export class StrokeRenderer {
 
     for (const stroke of strokes) {
       for (const point of stroke.points) {
-        minX = Math.min(minX, point.x);
-        minY = Math.min(minY, point.y);
-        maxX = Math.max(maxX, point.x);
-        maxY = Math.max(maxY, point.y);
+        // Apply transform if present
+        const transformedPoint = this.transformPoint(point, stroke.transform);
+
+        minX = Math.min(minX, transformedPoint.x);
+        minY = Math.min(minY, transformedPoint.y);
+        maxX = Math.max(maxX, transformedPoint.x);
+        maxY = Math.max(maxY, transformedPoint.y);
       }
     }
 
@@ -53,6 +72,17 @@ export class StrokeRenderer {
     if (strokes.length === 0) {
       console.warn('No strokes to render');
       return;
+    }
+
+    // Debug: log transforms
+    const strokesWithTransforms = strokes.filter(s => s.transform);
+    if (strokesWithTransforms.length > 0) {
+      console.log(`Found ${strokesWithTransforms.length} strokes with transforms:`);
+      strokesWithTransforms.forEach((s, i) => {
+        console.log(`  Stroke ${i}:`, s.transform);
+      });
+    } else {
+      console.log('No strokes have transforms');
     }
 
     this.clear();
@@ -94,6 +124,14 @@ export class StrokeRenderer {
     const b = Math.round(stroke.color.b * 255);
     this.ctx.strokeStyle = `rgba(${r}, ${g}, ${b}, ${stroke.color.a})`;
 
+    // Apply transform if present
+    if (stroke.transform) {
+      this.ctx.save();
+      const t = stroke.transform;
+      // Apply the affine transform matrix (negate ty for Y-axis flip)
+      this.ctx.transform(t.a, t.b, t.c, t.d, t.tx * this.scale, -t.ty * this.scale);
+    }
+
     this.ctx.beginPath();
 
     const firstPoint = stroke.points[0];
@@ -110,7 +148,17 @@ export class StrokeRenderer {
       );
     }
 
+    // Close the path if marked as closed
+    if (stroke.closed) {
+      this.ctx.closePath();
+    }
+
     this.ctx.stroke();
+
+    // Restore context if we applied a transform
+    if (stroke.transform) {
+      this.ctx.restore();
+    }
   }
 
   /**

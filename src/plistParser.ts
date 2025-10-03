@@ -5,7 +5,7 @@ import {
   POINT_STRIDE,
   XY_COMPONENTS,
 } from './constants.js';
-import type { ConceptsPlist, Stroke, Point, PlistObject, PlistUID, DrawingData, Color } from './types.js';
+import type { ConceptsPlist, Stroke, Point, PlistObject, PlistUID, DrawingData, Color, Transform } from './types.js';
 
 /**
  * Checks if a value is a UID reference object
@@ -82,6 +82,59 @@ function extractBrushWidth(obj: PlistObject, objects: PlistObject[]): number {
 
   const width = brushProps['brushWidth'];
   return typeof width === 'number' ? width : defaultWidth;
+}
+
+/**
+ * Decodes a CGAffineTransform from diSavedTransform buffer
+ * The buffer contains 48 bytes, but we only need the first 24 bytes (6 floats)
+ * Format: [a, b, c, d, tx, ty] where:
+ * - a, b, c, d form the 2x2 rotation/scale matrix
+ * - tx, ty are the translation offsets
+ */
+function extractTransform(obj: PlistObject): Transform | undefined {
+  if (!('diSavedTransform' in obj)) {
+    console.log('No diSavedTransform field in object');
+    return undefined;
+  }
+
+  const transformData = obj['diSavedTransform'];
+  console.log('Transform data:', transformData);
+  console.log('Is Uint8Array?', transformData instanceof Uint8Array);
+  console.log('Length:', transformData?.length);
+
+  if (!(transformData instanceof Uint8Array) || transformData.length < 24) {
+    console.warn('Transform data is not valid Uint8Array or too short');
+    return undefined;
+  }
+
+  // The buffer is 64 bytes, laid out as a 4x4 matrix (16 floats)
+  // We need to extract the 2D affine transform from it
+  // Layout appears to be: [a, 0, 0, 0, 0, d, 0, 0, 0, 0, 1, 0, tx, ty, 0, 1]
+  const view = new DataView(transformData.buffer, transformData.byteOffset, 64);
+
+  const transform: Transform = {
+    a: view.getFloat32(0, true),    // [0] scale/rotate x
+    b: view.getFloat32(4, true),    // [1] skew y
+    c: view.getFloat32(16, true),   // [4] skew x
+    d: view.getFloat32(20, true),   // [5] scale/rotate y
+    tx: view.getFloat32(48, true),  // [12] translate x
+    ty: view.getFloat32(52, true),  // [13] translate y
+  };
+
+  console.log('Extracted transform:', transform);
+
+  // Check if it's an identity transform (no transformation applied)
+  const isIdentity =
+    Math.abs(transform.a - 1) < 0.0001 &&
+    Math.abs(transform.b) < 0.0001 &&
+    Math.abs(transform.c) < 0.0001 &&
+    Math.abs(transform.d - 1) < 0.0001 &&
+    Math.abs(transform.tx) < 0.0001 &&
+    Math.abs(transform.ty) < 0.0001;
+
+  console.log('Is identity?', isIdentity);
+
+  return isIdentity ? undefined : transform;
 }
 
 /**
@@ -233,7 +286,9 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
       if (points && points.length > 0) {
         const width = extractBrushWidth(obj, objects);
         const color = extractBrushColor(obj, objects);
-        strokes.push({ points, width, color });
+        const transform = extractTransform(obj);
+        const closed = obj['closed'] === true;
+        strokes.push({ points, width, color, transform, closed });
       }
     }
   }

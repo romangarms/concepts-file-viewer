@@ -1,7 +1,8 @@
-// Represents a 2D point (x, y)
+// Represents a 2D point (x, y) with optional pressure
 export interface Point {
   x: number;
   y: number;
+  pressure?: number; // 0-1 range, optional
 }
 
 // RGB color
@@ -12,11 +13,23 @@ export interface Color {
   a: number; // 0-1 (alpha)
 }
 
+// 2D affine transform matrix
+export interface Transform {
+  a: number;  // scale x / cos(rotation)
+  b: number;  // skew y / sin(rotation)
+  c: number;  // skew x / -sin(rotation)
+  d: number;  // scale y / cos(rotation)
+  tx: number; // translate x
+  ty: number; // translate y
+}
+
 // A stroke with its points and metadata
 export interface Stroke {
   points: Point[];
-  width: number; // Brush width in points
-  color: Color;  // Brush color
+  width: number;     // Brush width in points
+  color: Color;      // Brush color
+  transform?: Transform; // Optional transform (for moved/rotated strokes)
+  closed?: boolean;  // Whether the path should connect back to start
 }
 
 // Plist object with UID reference
