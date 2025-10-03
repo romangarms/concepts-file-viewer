@@ -1,0 +1,142 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #333;
+}
+
+.container {
+  width: 90vw;
+  max-width: 1200px;
+  height: 90vh;
+  background: white;
+  border-radius: 16px;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+header {
+  padding: 2rem;
+  text-align: center;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+}
+
+header h1 {
+  font-size: 2rem;
+  margin-bottom: 0.5rem;
+}
+
+header p {
+  opacity: 0.9;
+  font-size: 1rem;
+}
+
+.drop-zone {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 2rem;
+  border: 3px dashed #ccc;
+  border-radius: 12px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.drop-zone:hover,
+.drop-zone.drag-over {
+  border-color: #667eea;
+  background: rgba(102, 126, 234, 0.05);
+}
+
+.drop-zone-content {
+  text-align: center;
+  padding: 2rem;
+}
+
+.drop-zone-content svg {
+  color: #667eea;
+  margin-bottom: 1rem;
+}
+
+.drop-zone-content h2 {
+  font-size: 1.5rem;
+  margin-bottom: 1rem;
+  color: #333;
+}
+
+.drop-zone-content p {
+  color: #666;
+  margin: 1rem 0;
+}
+
+.file-input-label {
+  display: inline-block;
+  padding: 0.75rem 2rem;
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: transform 0.2s ease;
+  font-weight: 600;
+}
+
+.file-input-label:hover {
+  transform: translateY(-2px);
+}
+
+#canvas {
+  flex: 1;
+  margin: 2rem;
+  border-radius: 8px;
+  background: white;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.status {
+  padding: 1rem 2rem;
+  text-align: center;
+  font-weight: 500;
+}
+
+.status.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.status.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+@media (max-width: 768px) {
+  .container {
+    width: 100vw;
+    height: 100vh;
+    border-radius: 0;
+  }
+
+  header h1 {
+    font-size: 1.5rem;
+  }
+
+  .drop-zone {
+    margin: 1rem;
+  }
+
+  #canvas {
+    margin: 1rem;
+  }
+}
