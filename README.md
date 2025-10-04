@@ -10,7 +10,7 @@ Web-based viewer for iOS Concepts app files (.concept format).
 - **Touch Support** - Pinch to zoom and drag on mobile/tablet devices
 - **Transform Support** - Correctly applies affine transformations to strokes
 - **High-DPI Support** - Sharp rendering on Retina and other high-DPI displays
-- **Export Data** - Download parsed binary plists as JSON files
+- **Export Data** - Download parsed binary plists as JSON files (for debugging)
 
 ## Getting Started
 
