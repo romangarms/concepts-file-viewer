@@ -357,10 +357,17 @@ export class StrokeRenderer {
 
   /**
    * Resize the canvas to match its display size
+   * Accounts for device pixel ratio for sharp rendering on high-DPI displays
    */
   resize(): void {
     const rect = this.canvas.getBoundingClientRect();
-    this.canvas.width = rect.width;
-    this.canvas.height = rect.height;
+    const dpr = window.devicePixelRatio || 1;
+
+    // Set canvas size in actual pixels (accounting for device pixel ratio)
+    this.canvas.width = rect.width * dpr;
+    this.canvas.height = rect.height * dpr;
+
+    // Scale the context to match, so we can still draw at logical pixel coordinates
+    this.ctx.scale(dpr, dpr);
   }
 }
