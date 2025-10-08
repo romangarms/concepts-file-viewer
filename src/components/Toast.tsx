@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect} from 'react';
 
 interface ToastProps {
   message: string;
@@ -7,7 +7,7 @@ interface ToastProps {
   onHide: () => void;
 }
 
-export function Toast({ message, type, show, onHide }: ToastProps) {
+export function Toast({ message, type, show, onHide }: Readonly<ToastProps>) {
   useEffect(() => {
     if (show) {
       const timer = setTimeout(() => {

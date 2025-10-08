@@ -5,7 +5,7 @@ interface ZoomControlsProps {
   onBack: () => void;
 }
 
-export function ZoomControls({ onZoomIn, onZoomOut, onReset, onBack }: ZoomControlsProps) {
+export function ZoomControls({ onZoomIn, onZoomOut, onReset, onBack }: Readonly<ZoomControlsProps>) {
   return (
     <div className="zoom-controls">
       <button onClick={onZoomIn} className="zoom-button" title="Zoom In">
