@@ -46,6 +46,30 @@ export class FileHandler {
     const plistData = parsed[0];
     const drawingData = parseConceptsStrokes(plistData);
 
+    // Extract images from ImportedImages folder
+    const importedImagesFolder = zip.folder('ImportedImages');
+    if (importedImagesFolder) {
+      const imagePromises = drawingData.images.map(async (image) => {
+        // Try common image extensions
+        const extensions = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+        for (const ext of extensions) {
+          const imageFile = zip.file(`ImportedImages/${image.uuid}.${ext}`);
+          if (imageFile) {
+            const imageBuffer = await imageFile.async('uint8array');
+            // Convert to base64 data URL
+            const base64 = btoa(
+              Array.from(imageBuffer)
+                .map((byte) => String.fromCharCode(byte))
+                .join('')
+            );
+            image.imageData = `data:image/${ext};base64,${base64}`;
+            break;
+          }
+        }
+      });
+      await Promise.all(imagePromises);
+    }
+
     return drawingData;
   }
 

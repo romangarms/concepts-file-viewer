@@ -1,4 +1,4 @@
-import type { Stroke, DrawingData } from './types.js';
+import type { Stroke, DrawingData, ImportedImage } from './types.js';
 
 // Zoom configuration constants
 const ZOOM_CONFIG = {
@@ -24,6 +24,7 @@ export class StrokeRenderer {
   private logicalHeight: number = 0; // Store logical height for Y-axis flip
   private initialPanX: number = 0; // Store initial centered position for reset
   private initialPanY: number = 0;
+  private loadedImages: Map<string, HTMLImageElement> = new Map(); // Cache for loaded images
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -232,20 +233,71 @@ export class StrokeRenderer {
   }
 
   /**
-   * Calculate bounds of all strokes to fit them in the viewport
+   * Apply Concepts transform to canvas context
+   * Now that we have global Y-flip, just apply transform as-is
+   */
+  private applyConceptsTransform(transform: import('./types.js').Transform): void {
+    // Apply the affine transform matrix directly (Y-flip is handled globally)
+    this.ctx.transform(
+      transform.a,
+      transform.b,
+      transform.c,
+      transform.d,
+      transform.tx * this.baseScale,
+      transform.ty * this.baseScale
+    );
+  }
+
+  /**
+   * Draw image with automatic Y-flip correction
+   * Uses negative height to flip the image without needing ctx.scale(1, -1)
+   */
+  private drawImageFlipped(
+    img: HTMLImageElement,
+    x: number,
+    y: number,
+    width: number,
+    height: number
+  ): void {
+    // Use negative height to flip the image vertically
+    // When height is negative, we need to start from bottom (y + height)
+    this.ctx.drawImage(img, x, y + height, width, -height);
+  }
+
+  /**
+   * Calculate bounds of all strokes and images to fit them in the viewport
    * Takes transforms into account
    */
-  private calculateBounds(strokes: Stroke[]): { minX: number; minY: number; maxX: number; maxY: number } {
+  private calculateBounds(data: DrawingData): { minX: number; minY: number; maxX: number; maxY: number } {
     let minX = Infinity;
     let minY = Infinity;
     let maxX = -Infinity;
     let maxY = -Infinity;
 
-    for (const stroke of strokes) {
+    // Include strokes in bounds
+    for (const stroke of data.strokes) {
       for (const point of stroke.points) {
         // Apply transform if present
         const transformedPoint = this.transformPoint(point, stroke.transform);
 
+        minX = Math.min(minX, transformedPoint.x);
+        minY = Math.min(minY, transformedPoint.y);
+        maxX = Math.max(maxX, transformedPoint.x);
+        maxY = Math.max(maxY, transformedPoint.y);
+      }
+    }
+
+    // Include images in bounds
+    for (const image of data.images) {
+      const corners = [
+        { x: image.position.x, y: image.position.y },
+        { x: image.position.x + image.size.x, y: image.position.y },
+        { x: image.position.x, y: image.position.y + image.size.y },
+        { x: image.position.x + image.size.x, y: image.position.y + image.size.y },
+      ];
+
+      for (const corner of corners) {
+        const transformedPoint = this.transformPoint(corner, image.transform);
         minX = Math.min(minX, transformedPoint.x);
         minY = Math.min(minY, transformedPoint.y);
         maxX = Math.max(maxX, transformedPoint.x);
@@ -264,19 +316,43 @@ export class StrokeRenderer {
   }
 
   /**
-   * Render all strokes to the canvas
+   * Load image data into HTMLImageElement
    */
-  render(drawingData: DrawingData): void {
-    this.currentDrawingData = drawingData;
-    const { strokes } = drawingData;
+  private async loadImage(imageData: string): Promise<HTMLImageElement> {
+    return new Promise((resolve, reject) => {
+      const img = new Image();
+      img.onload = () => resolve(img);
+      img.onerror = reject;
+      img.src = imageData;
+    });
+  }
 
-    if (strokes.length === 0) {
-      console.warn('No strokes to render');
+  /**
+   * Render all strokes and images to the canvas
+   */
+  async render(drawingData: DrawingData): Promise<void> {
+    this.currentDrawingData = drawingData;
+    const { strokes, images } = drawingData;
+
+    if (strokes.length === 0 && images.length === 0) {
+      console.warn('No strokes or images to render');
       return;
     }
 
+    // Load all images
+    for (const image of images) {
+      if (image.imageData && !this.loadedImages.has(image.uuid)) {
+        try {
+          const img = await this.loadImage(image.imageData);
+          this.loadedImages.set(image.uuid, img);
+        } catch (error) {
+          console.error(`Failed to load image ${image.uuid}:`, error);
+        }
+      }
+    }
+
     // Simple approach: just center the drawing without auto-scaling
-    const bounds = this.calculateBounds(strokes);
+    const bounds = this.calculateBounds(drawingData);
     const width = bounds.maxX - bounds.minX;
     const height = bounds.maxY - bounds.minY;
 
@@ -333,6 +409,16 @@ export class StrokeRenderer {
     this.ctx.translate(this.panX, this.panY);
     this.ctx.scale(this.userScale, this.userScale);
 
+    // Flip Y-axis to match Concepts' bottom-left origin
+    // Translate to bottom of canvas, then flip Y
+    this.ctx.translate(0, this.logicalHeight);
+    this.ctx.scale(1, -1);
+
+    // Render images first (so they appear behind strokes)
+    for (const image of this.currentDrawingData.images) {
+      this.renderImage(image);
+    }
+
     // Render each stroke
     this.ctx.lineCap = 'round';
     this.ctx.lineJoin = 'round';
@@ -342,6 +428,48 @@ export class StrokeRenderer {
     }
 
     // Restore canvas state
+    this.ctx.restore();
+  }
+
+  /**
+   * Render a single image
+   */
+  private renderImage(image: ImportedImage): void {
+    const img = this.loadedImages.get(image.uuid);
+    if (!img) return;
+
+    this.ctx.save();
+
+    // Apply transform if present
+    if (image.transform) {
+      this.applyConceptsTransform(image.transform);
+
+      // Transform positions the image CENTER at (tx, ty)
+      // Offset by half size to position correctly
+      const halfWidth = (image.size.x * this.baseScale) / 2;
+      const halfHeight = (image.size.y * this.baseScale) / 2;
+
+      this.drawImageFlipped(
+        img,
+        -halfWidth,
+        -halfHeight,
+        image.size.x * this.baseScale,
+        image.size.y * this.baseScale
+      );
+    } else {
+      // No transform - draw at position (bottom-left corner in Concepts coords)
+      const drawX = image.position.x * this.baseScale;
+      const drawY = image.position.y * this.baseScale;
+
+      this.drawImageFlipped(
+        img,
+        drawX,
+        drawY,
+        image.size.x * this.baseScale,
+        image.size.y * this.baseScale
+      );
+    }
+
     this.ctx.restore();
   }
 
@@ -363,9 +491,7 @@ export class StrokeRenderer {
     // Apply transform if present
     if (stroke.transform) {
       this.ctx.save();
-      const t = stroke.transform;
-      // Apply the affine transform matrix (negate ty for Y-axis flip)
-      this.ctx.transform(t.a, t.b, t.c, t.d, t.tx * this.baseScale, -t.ty * this.baseScale);
+      this.applyConceptsTransform(stroke.transform);
     }
 
     this.ctx.beginPath();
@@ -373,14 +499,14 @@ export class StrokeRenderer {
     const firstPoint = stroke.points[0];
     this.ctx.moveTo(
       firstPoint.x * this.baseScale,
-      this.logicalHeight - (firstPoint.y * this.baseScale)
+      firstPoint.y * this.baseScale  // No Y-flip needed - global flip handles it
     );
 
     for (let i = 1; i < stroke.points.length; i++) {
       const point = stroke.points[i];
       this.ctx.lineTo(
         point.x * this.baseScale,
-        this.logicalHeight - (point.y * this.baseScale)
+        point.y * this.baseScale  // No Y-flip needed - global flip handles it
       );
     }
 

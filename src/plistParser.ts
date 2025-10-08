@@ -4,7 +4,7 @@ import {
   PLIST_KEYS,
   POINT_STRIDE
 } from './constants.js';
-import type { Stroke, Point, PlistObject, DrawingData, Color, Transform } from './types.js';
+import type { Stroke, Point, PlistObject, DrawingData, Color, Transform, ImportedImage } from './types.js';
 
 /**
  * Checks if a value is a UID reference object
@@ -56,6 +56,19 @@ function decodeGLPosition(buffer: Uint8Array): Point | null {
   return {
     x: view.getFloat32(0, true), // little-endian
     y: view.getFloat32(4, true),
+  };
+}
+
+/**
+ * Parses a size string like "{397.5, 393}" to a Point
+ */
+function parseSize(sizeStr: string): Point | null {
+  const match = sizeStr.match(/\{([^,]+),\s*([^}]+)\}/);
+  if (!match) return null;
+
+  return {
+    x: parseFloat(match[1]),
+    y: parseFloat(match[2]),
   };
 }
 
@@ -168,6 +181,57 @@ function extractBrushColor(obj: PlistObject, objects: PlistObject[]): Color {
 }
 
 /**
+ * Attempts to extract an ImportedImage from an ImageItem object
+ */
+function extractImageItem(obj: PlistObject, objects: PlistObject[]): ImportedImage | null {
+  // Check if this is an ImageItem by looking for imageIdentifier
+  if (!('imageIdentifier' in obj)) {
+    return null;
+  }
+
+  // Extract image UUID
+  const imageIdUID = obj['imageIdentifier'];
+  if (!isUID(imageIdUID)) {
+    return null;
+  }
+  const uuid = objects[getUIDValue(imageIdUID)];
+  if (typeof uuid !== 'string') {
+    return null;
+  }
+
+  // Extract size
+  let size: Point = { x: 100, y: 100 }; // Default size
+  if ('size' in obj) {
+    const sizeUID = obj['size'];
+    if (isUID(sizeUID)) {
+      const sizeStr = objects[getUIDValue(sizeUID)];
+      if (typeof sizeStr === 'string') {
+        const parsedSize = parseSize(sizeStr);
+        if (parsedSize) {
+          size = parsedSize;
+        }
+      }
+    }
+  }
+
+  // Extract transform (position is in the transform)
+  const transform = extractTransform(obj);
+
+  // The position is stored in the transform's tx and ty values
+  const position: Point = {
+    x: transform?.tx ?? 0,
+    y: transform?.ty ?? 0,
+  };
+
+  return {
+    uuid,
+    position,
+    size,
+    transform,
+  };
+}
+
+/**
  * Attempts to extract stroke points from a stroke object
  */
 function extractStrokePoints(obj: PlistObject, objects: PlistObject[]): Point[] | null {
@@ -255,6 +319,7 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
   }
 
   const strokes: Stroke[] = [];
+  const images: ImportedImage[] = [];
 
   // Iterate through all group items
   for (const strokeRef of groupItems) {
@@ -268,11 +333,19 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
 
     if (!Array.isArray(subObjs)) continue;
 
-    // Extract points from each sub-object
+    // Extract items from each sub-object
     for (const objRef of subObjs) {
       const obj = isUID(objRef) ? objects[getUIDValue(objRef)] : objRef;
       if (!obj) continue;
 
+      // Try to extract as an image first
+      const image = extractImageItem(obj, objects);
+      if (image) {
+        images.push(image);
+        continue;
+      }
+
+      // Otherwise, try to extract as a stroke
       const points = extractStrokePoints(obj, objects);
       if (points && points.length > 0) {
         const width = extractBrushWidth(obj, objects);
@@ -284,5 +357,5 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
     }
   }
 
-  return { strokes };
+  return { strokes, images };
 }

@@ -32,6 +32,15 @@ export interface Stroke {
   closed?: boolean;  // Whether the path should connect back to start
 }
 
+// An imported image in the drawing
+export interface ImportedImage {
+  uuid: string;       // Image UUID (matches filename in ImportedImages/)
+  position: Point;    // Position in drawing coordinates
+  size: Point;        // Size (width, height) in drawing coordinates
+  transform?: Transform; // Optional transform (for moved/rotated images)
+  imageData?: string; // Base64 encoded image data
+}
+
 // Plist object with UID reference
 export interface PlistUID {
   data: number;
@@ -53,6 +62,7 @@ export interface ConceptsPlist {
 // Parsed drawing data
 export interface DrawingData {
   strokes: Stroke[];
+  images: ImportedImage[];
   metadata?: {
     width?: number;
     height?: number;

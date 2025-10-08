@@ -21,10 +21,10 @@ export function useStrokeRenderer() {
     };
   }, []);
 
-  const render = useCallback((data: DrawingData) => {
+  const render = useCallback(async (data: DrawingData) => {
     if (rendererRef.current) {
       rendererRef.current.resize();
-      rendererRef.current.render(data);
+      await rendererRef.current.render(data);
     }
   }, []);
 
