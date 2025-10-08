@@ -101,6 +101,15 @@ body {
   font-weight: 500;
   z-index: 10;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  opacity: 0;
+  transform: translateY(-20px);
+  transition: opacity 0.3s ease, transform 0.3s ease;
+  pointer-events: none;
+}
+
+.status.show {
+  opacity: 1;
+  transform: translateY(0);
 }
 
 .status.success {

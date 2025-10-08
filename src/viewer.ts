@@ -77,8 +77,8 @@ class ConceptsViewer {
 
       const data: DrawingData = JSON.parse(dataStr);
 
-      this.statusElement.textContent = `Loaded ${data.strokes.length} strokes`;
-      this.statusElement.className = 'status success';
+      // Show toast notification
+      this.showToast(`Loaded ${data.strokes.length} strokes`, 'success');
 
       // Resize canvas now that it's visible
       this.renderer.resize();
@@ -91,9 +91,18 @@ class ConceptsViewer {
   }
 
   private showError(error: Error): void {
-    this.statusElement.textContent = `Error: ${error.message}`;
-    this.statusElement.className = 'status error';
+    this.showToast(`Error: ${error.message}`, 'error');
     console.error('Error:', error);
+  }
+
+  private showToast(message: string, type: 'success' | 'error'): void {
+    this.statusElement.textContent = message;
+    this.statusElement.className = `status ${type} show`;
+
+    // Hide after 3 seconds with fade out
+    setTimeout(() => {
+      this.statusElement.classList.remove('show');
+    }, 3000);
   }
 }
 
