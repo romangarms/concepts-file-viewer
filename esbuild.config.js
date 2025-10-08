@@ -7,6 +7,8 @@ const sharedConfig = {
   format: 'esm',
   external: ['jszip'],
   platform: 'browser',
+  loader: { '.tsx': 'tsx', '.ts': 'ts' },
+  jsx: 'automatic',
   define: {
     'global': 'window',
     'process.env.NODE_ENV': '"production"'
@@ -20,13 +22,8 @@ const sharedConfig = {
 const configs = [
   {
     ...sharedConfig,
-    entryPoints: ['src/main.ts'],
+    entryPoints: ['src/main.tsx'],
     outfile: 'dist/bundle.js',
-  },
-  {
-    ...sharedConfig,
-    entryPoints: ['src/viewer.ts'],
-    outfile: 'dist/viewer.js',
   }
 ];
 
