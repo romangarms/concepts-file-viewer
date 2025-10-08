@@ -1,4 +1,5 @@
-import type { Stroke, DrawingData, ImportedImage } from './types.js';
+import type { Stroke, DrawingData } from './types.js';
+import { ImageRenderer } from './imageRenderer.js';
 
 // Zoom configuration constants
 const ZOOM_CONFIG = {
@@ -24,7 +25,7 @@ export class StrokeRenderer {
   private logicalHeight: number = 0; // Store logical height for Y-axis flip
   private initialPanX: number = 0; // Store initial centered position for reset
   private initialPanY: number = 0;
-  private loadedImages: Map<string, HTMLImageElement> = new Map(); // Cache for loaded images
+  private imageRenderer: ImageRenderer = new ImageRenderer(); // Handle image loading and rendering
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -249,22 +250,6 @@ export class StrokeRenderer {
   }
 
   /**
-   * Draw image with automatic Y-flip correction
-   * Uses negative height to flip the image without needing ctx.scale(1, -1)
-   */
-  private drawImageFlipped(
-    img: HTMLImageElement,
-    x: number,
-    y: number,
-    width: number,
-    height: number
-  ): void {
-    // Use negative height to flip the image vertically
-    // When height is negative, we need to start from bottom (y + height)
-    this.ctx.drawImage(img, x, y + height, width, -height);
-  }
-
-  /**
    * Calculate bounds of all strokes and images to fit them in the viewport
    * Takes transforms into account
    */
@@ -316,18 +301,6 @@ export class StrokeRenderer {
   }
 
   /**
-   * Load image data into HTMLImageElement
-   */
-  private async loadImage(imageData: string): Promise<HTMLImageElement> {
-    return new Promise((resolve, reject) => {
-      const img = new Image();
-      img.onload = () => resolve(img);
-      img.onerror = reject;
-      img.src = imageData;
-    });
-  }
-
-  /**
    * Render all strokes and images to the canvas
    */
   async render(drawingData: DrawingData): Promise<void> {
@@ -341,10 +314,9 @@ export class StrokeRenderer {
 
     // Load all images
     for (const image of images) {
-      if (image.imageData && !this.loadedImages.has(image.uuid)) {
+      if (image.imageData && !this.imageRenderer.has(image.uuid)) {
         try {
-          const img = await this.loadImage(image.imageData);
-          this.loadedImages.set(image.uuid, img);
+          await this.imageRenderer.loadAndCache(image.uuid, image.imageData);
         } catch (error) {
           console.error(`Failed to load image ${image.uuid}:`, error);
         }
@@ -416,7 +388,7 @@ export class StrokeRenderer {
 
     // Render images first (so they appear behind strokes)
     for (const image of this.currentDrawingData.images) {
-      this.renderImage(image);
+      this.imageRenderer.render(this.ctx, image, this.baseScale);
     }
 
     // Render each stroke
@@ -428,48 +400,6 @@ export class StrokeRenderer {
     }
 
     // Restore canvas state
-    this.ctx.restore();
-  }
-
-  /**
-   * Render a single image
-   */
-  private renderImage(image: ImportedImage): void {
-    const img = this.loadedImages.get(image.uuid);
-    if (!img) return;
-
-    this.ctx.save();
-
-    // Apply transform if present
-    if (image.transform) {
-      this.applyConceptsTransform(image.transform);
-
-      // Transform positions the image CENTER at (tx, ty)
-      // Offset by half size to position correctly
-      const halfWidth = (image.size.x * this.baseScale) / 2;
-      const halfHeight = (image.size.y * this.baseScale) / 2;
-
-      this.drawImageFlipped(
-        img,
-        -halfWidth,
-        -halfHeight,
-        image.size.x * this.baseScale,
-        image.size.y * this.baseScale
-      );
-    } else {
-      // No transform - draw at position (bottom-left corner in Concepts coords)
-      const drawX = image.position.x * this.baseScale;
-      const drawY = image.position.y * this.baseScale;
-
-      this.drawImageFlipped(
-        img,
-        drawX,
-        drawY,
-        image.size.x * this.baseScale,
-        image.size.y * this.baseScale
-      );
-    }
-
     this.ctx.restore();
   }
 
