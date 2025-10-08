@@ -21,8 +21,6 @@ export class FileHandler {
       throw new Error('Please select a .concept file');
     }
 
-    console.log(`Processing ${file.name}...`);
-
     // Read file as array buffer
     const arrayBuffer = await file.arrayBuffer();
 
@@ -47,8 +45,6 @@ export class FileHandler {
 
     const plistData = parsed[0];
     const drawingData = parseConceptsStrokes(plistData);
-
-    console.log(`Successfully loaded ${drawingData.strokes.length} strokes`);
 
     return drawingData;
   }

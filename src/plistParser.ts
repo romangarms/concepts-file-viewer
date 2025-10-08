@@ -2,10 +2,9 @@ import {
   STROKE_POINT_FIELDS,
   KEY_POINT_FIELDS,
   PLIST_KEYS,
-  POINT_STRIDE,
-  XY_COMPONENTS,
+  POINT_STRIDE
 } from './constants.js';
-import type { ConceptsPlist, Stroke, Point, PlistObject, PlistUID, DrawingData, Color, Transform } from './types.js';
+import type { Stroke, Point, PlistObject, DrawingData, Color, Transform } from './types.js';
 
 /**
  * Checks if a value is a UID reference object
@@ -93,14 +92,10 @@ function extractBrushWidth(obj: PlistObject, objects: PlistObject[]): number {
  */
 function extractTransform(obj: PlistObject): Transform | undefined {
   if (!('diSavedTransform' in obj)) {
-    console.log('No diSavedTransform field in object');
     return undefined;
   }
 
   const transformData = obj['diSavedTransform'];
-  console.log('Transform data:', transformData);
-  console.log('Is Uint8Array?', transformData instanceof Uint8Array);
-  console.log('Length:', transformData?.length);
 
   if (!(transformData instanceof Uint8Array) || transformData.length < 24) {
     console.warn('Transform data is not valid Uint8Array or too short');
@@ -121,8 +116,6 @@ function extractTransform(obj: PlistObject): Transform | undefined {
     ty: view.getFloat32(52, true),  // [13] translate y
   };
 
-  console.log('Extracted transform:', transform);
-
   // Check if it's an identity transform (no transformation applied)
   const isIdentity =
     Math.abs(transform.a - 1) < 0.0001 &&
@@ -131,8 +124,6 @@ function extractTransform(obj: PlistObject): Transform | undefined {
     Math.abs(transform.d - 1) < 0.0001 &&
     Math.abs(transform.tx) < 0.0001 &&
     Math.abs(transform.ty) < 0.0001;
-
-  console.log('Is identity?', isIdentity);
 
   return isIdentity ? undefined : transform;
 }
