@@ -58,7 +58,7 @@ export class FileHandler {
    */
   setupDragAndDrop(
     element: HTMLElement,
-    onFileLoaded: (data: DrawingData, plists: ConceptPlists) => void,
+    onFileLoaded: (data: DrawingData) => void,
     onError: (error: Error) => void
   ): void {
     // Prevent default drag behaviors
@@ -90,8 +90,8 @@ export class FileHandler {
       const file = files[0];
 
       try {
-        const { data, plists } = await this.processConceptFileWithPlists(file);
-        onFileLoaded(data, plists);
+        const data = await this.processConceptFile(file);
+        onFileLoaded(data);
       } catch (error) {
         onError(error instanceof Error ? error : new Error(String(error)));
       }
@@ -103,7 +103,7 @@ export class FileHandler {
    */
   setupFileInput(
     input: HTMLInputElement,
-    onFileLoaded: (data: DrawingData, plists: ConceptPlists) => void,
+    onFileLoaded: (data: DrawingData) => void,
     onError: (error: Error) => void
   ): void {
     input.addEventListener('change', async () => {
@@ -113,8 +113,8 @@ export class FileHandler {
       const file = files[0];
 
       try {
-        const { data, plists } = await this.processConceptFileWithPlists(file);
-        onFileLoaded(data, plists);
+        const data = await this.processConceptFile(file);
+        onFileLoaded(data);
       } catch (error) {
         onError(error instanceof Error ? error : new Error(String(error)));
       }

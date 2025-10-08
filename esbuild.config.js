@@ -2,11 +2,9 @@ const esbuild = require('esbuild');
 
 const isWatch = process.argv.includes('--watch');
 
-const config = {
-  entryPoints: ['src/main.ts'],
+const sharedConfig = {
   bundle: true,
   format: 'esm',
-  outfile: 'dist/bundle.js',
   external: ['jszip'],
   platform: 'browser',
   define: {
@@ -19,11 +17,24 @@ const config = {
   }
 };
 
+const configs = [
+  {
+    ...sharedConfig,
+    entryPoints: ['src/main.ts'],
+    outfile: 'dist/bundle.js',
+  },
+  {
+    ...sharedConfig,
+    entryPoints: ['src/viewer.ts'],
+    outfile: 'dist/viewer.js',
+  }
+];
+
 if (isWatch) {
-  esbuild.context(config).then(ctx => {
-    ctx.watch();
+  Promise.all(configs.map(config => esbuild.context(config))).then(contexts => {
+    contexts.forEach(ctx => ctx.watch());
     console.log('Watching for changes...');
   });
 } else {
-  esbuild.build(config).catch(() => process.exit(1));
+  Promise.all(configs.map(config => esbuild.build(config))).catch(() => process.exit(1));
 }

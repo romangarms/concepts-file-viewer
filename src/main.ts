@@ -1,131 +1,57 @@
 import { FileHandler } from './fileHandler.js';
-import { StrokeRenderer } from './strokeRenderer.js';
-import type { DrawingData, ConceptPlists } from './types.js';
+import type { DrawingData } from './types.js';
 
 /**
- * Main application class
+ * Main application class - handles file selection and navigation to viewer
  */
 class ConceptsFileViewer {
   private readonly fileHandler: FileHandler;
-  private readonly renderer: StrokeRenderer;
-  private readonly canvas: HTMLCanvasElement;
   private readonly dropZone: HTMLElement;
   private readonly fileInput: HTMLInputElement;
   private readonly statusElement: HTMLElement;
-  private readonly controlsDiv: HTMLElement;
-  private readonly downloadButton: HTMLButtonElement;
-  private readonly zoomControlsDiv: HTMLElement;
-  private readonly zoomInButton: HTMLButtonElement;
-  private readonly zoomOutButton: HTMLButtonElement;
-  private readonly resetViewButton: HTMLButtonElement;
-  private currentPlists: ConceptPlists | null = null;
 
   constructor() {
     // Get DOM elements
-    this.canvas = document.getElementById('canvas') as HTMLCanvasElement;
     this.dropZone = document.getElementById('drop-zone') as HTMLElement;
     this.fileInput = document.getElementById('file-input') as HTMLInputElement;
     this.statusElement = document.getElementById('status') as HTMLElement;
-    this.controlsDiv = document.getElementById('controls') as HTMLElement;
-    this.downloadButton = document.getElementById('download-json') as HTMLButtonElement;
-    this.zoomControlsDiv = document.getElementById('zoom-controls') as HTMLElement;
-    this.zoomInButton = document.getElementById('zoom-in') as HTMLButtonElement;
-    this.zoomOutButton = document.getElementById('zoom-out') as HTMLButtonElement;
-    this.resetViewButton = document.getElementById('reset-view') as HTMLButtonElement;
 
-    if (!this.canvas || !this.dropZone || !this.fileInput || !this.statusElement || !this.controlsDiv || !this.downloadButton || !this.zoomControlsDiv || !this.zoomInButton || !this.zoomOutButton || !this.resetViewButton) {
+    if (!this.dropZone || !this.fileInput || !this.statusElement) {
       throw new Error('Required DOM elements not found');
     }
 
-    // Initialize modules
-    this.renderer = new StrokeRenderer(this.canvas);
+    // Initialize file handler
     this.fileHandler = new FileHandler();
 
     // Set up event handlers
     this.setupEventHandlers();
-
-    // Initial canvas sizing
-    this.handleResize();
   }
 
   private setupEventHandlers(): void {
     // Drag and drop
     this.fileHandler.setupDragAndDrop(
       this.dropZone,
-      (data, plists) => this.onFileLoaded(data, plists),
+      (data) => this.onFileLoaded(data),
       (error) => this.onError(error)
     );
 
     // File input
     this.fileHandler.setupFileInput(
       this.fileInput,
-      (data, plists) => this.onFileLoaded(data, plists),
+      (data) => this.onFileLoaded(data),
       (error) => this.onError(error)
     );
-
-    // Download button
-    this.downloadButton.addEventListener('click', () => this.downloadAllPlists());
-
-    // Zoom controls
-    this.zoomInButton.addEventListener('click', () => this.renderer.zoomIn());
-    this.zoomOutButton.addEventListener('click', () => this.renderer.zoomOut());
-    this.resetViewButton.addEventListener('click', () => this.renderer.resetView());
-
-    // Window resize
-    window.addEventListener('resize', () => this.handleResize());
   }
 
-  private handleResize(): void {
-    this.renderer.resize();
-    // Re-render if we have data loaded
-    // (In a real app, you'd store the current DrawingData)
-  }
-
-  private onFileLoaded(data: DrawingData, plists: ConceptPlists): void {
-    this.currentPlists = plists;
-
-    this.statusElement.textContent = `Loaded ${data.strokes.length} strokes`;
+  private onFileLoaded(data: DrawingData): void {
+    this.statusElement.textContent = `Loading ${data.strokes.length} strokes...`;
     this.statusElement.className = 'status success';
 
-    // Hide drop zone, show canvas and controls
-    this.dropZone.style.display = 'none';
-    this.canvas.style.display = 'block';
-    this.controlsDiv.style.display = 'block';
-    this.zoomControlsDiv.style.display = 'flex';
+    // Store only the drawing data in sessionStorage
+    sessionStorage.setItem('conceptsData', JSON.stringify(data));
 
-    // Resize canvas now that it's visible
-    this.renderer.resize();
-
-    // Render the drawing
-    this.renderer.render(data);
-  }
-
-  private downloadAllPlists(): void {
-    if (!this.currentPlists) return;
-
-    // Download each plist as a separate file
-    this.downloadPlist('Strokes.json', this.currentPlists.strokes);
-    this.downloadPlist('Drawing.json', this.currentPlists.drawing);
-    this.downloadPlist('Resources.json', this.currentPlists.resources);
-    this.downloadPlist('metadata.json', this.currentPlists.metadata);
-  }
-
-  private downloadPlist(filename: string, data: any): void {
-    if (!data) {
-      console.warn(`No data for ${filename}`);
-      return;
-    }
-
-    const json = JSON.stringify(data, null, 2);
-    const blob = new Blob([json], { type: 'application/json' });
-    const url = URL.createObjectURL(blob);
-
-    const a = document.createElement('a');
-    a.href = url;
-    a.download = filename;
-    a.click();
-
-    URL.revokeObjectURL(url);
+    // Navigate to viewer
+    window.location.href = 'viewer.html';
   }
 
   private onError(error: Error): void {

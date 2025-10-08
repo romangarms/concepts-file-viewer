@@ -1,10 +1,18 @@
 import type { Stroke, DrawingData } from './types.js';
 
+// Zoom configuration constants
+const ZOOM_CONFIG = {
+  MIN_ZOOM: 0.1,          // Minimum zoom out (smaller = more zoomed out)
+  MAX_ZOOM: 10,           // Maximum zoom in
+  ZOOM_STEP: 1.2,         // Zoom in/out multiplier for buttons
+  WHEEL_ZOOM_FACTOR: 0.9  // Zoom factor for mouse wheel (1/0.9 for zoom in)
+};
+
 export class StrokeRenderer {
   private readonly canvas: HTMLCanvasElement;
   private readonly ctx: CanvasRenderingContext2D;
   private baseScale: number = 1;
-  private userScale: number = 2; // Start at 2x zoom
+  private userScale: number = 1; // Start at 1x (baseScale handles fit-to-screen)
   private panX: number = 0;
   private panY: number = 0;
   private offsetX: number = 0;
@@ -13,6 +21,9 @@ export class StrokeRenderer {
   private lastMouseX: number = 0;
   private lastMouseY: number = 0;
   private currentDrawingData: DrawingData | null = null;
+  private logicalHeight: number = 0; // Store logical height for Y-axis flip
+  private initialPanX: number = 0; // Store initial centered position for reset
+  private initialPanY: number = 0;
 
   constructor(canvas: HTMLCanvasElement) {
     this.canvas = canvas;
@@ -36,11 +47,11 @@ export class StrokeRenderer {
       const mouseX = e.clientX - rect.left;
       const mouseY = e.clientY - rect.top;
 
-      const zoomFactor = e.deltaY > 0 ? 0.9 : 1.1;
+      const zoomFactor = e.deltaY > 0 ? ZOOM_CONFIG.WHEEL_ZOOM_FACTOR : 1 / ZOOM_CONFIG.WHEEL_ZOOM_FACTOR;
       const newScale = this.userScale * zoomFactor;
 
       // Limit zoom range
-      if (newScale < 0.5 || newScale > 10) return;
+      if (newScale < ZOOM_CONFIG.MIN_ZOOM || newScale > ZOOM_CONFIG.MAX_ZOOM) return;
 
       // Zoom towards mouse position
       this.panX = mouseX - (mouseX - this.panX) * (newScale / this.userScale);
@@ -148,7 +159,7 @@ export class StrokeRenderer {
           const newScale = this.userScale * zoomFactor;
 
           // Limit zoom range
-          if (newScale >= 0.5 && newScale <= 10) {
+          if (newScale >= ZOOM_CONFIG.MIN_ZOOM && newScale <= ZOOM_CONFIG.MAX_ZOOM) {
             // Zoom towards pinch center
             this.panX = canvasX - (canvasX - this.panX) * (newScale / this.userScale);
             this.panY = canvasY - (canvasY - this.panY) * (newScale / this.userScale);
@@ -176,19 +187,32 @@ export class StrokeRenderer {
    * Public methods to control zoom
    */
   zoomIn(): void {
-    this.userScale = Math.min(10, this.userScale * 1.2);
-    this.redraw();
+    const newScale = Math.min(ZOOM_CONFIG.MAX_ZOOM, this.userScale * ZOOM_CONFIG.ZOOM_STEP);
+    this.zoomTowardCenter(newScale);
   }
 
   zoomOut(): void {
-    this.userScale = Math.max(0.5, this.userScale / 1.2);
+    const newScale = Math.max(ZOOM_CONFIG.MIN_ZOOM, this.userScale / ZOOM_CONFIG.ZOOM_STEP);
+    this.zoomTowardCenter(newScale);
+  }
+
+  private zoomTowardCenter(newScale: number): void {
+    const rect = this.canvas.getBoundingClientRect();
+    const centerX = rect.width / 2;
+    const centerY = rect.height / 2;
+
+    // Adjust pan to zoom toward center (same logic as mouse wheel zoom)
+    this.panX = centerX - (centerX - this.panX) * (newScale / this.userScale);
+    this.panY = centerY - (centerY - this.panY) * (newScale / this.userScale);
+
+    this.userScale = newScale;
     this.redraw();
   }
 
   resetView(): void {
-    this.userScale = 2;
-    this.panX = 0;
-    this.panY = 0;
+    this.userScale = 1;
+    this.panX = this.initialPanX;
+    this.panY = this.initialPanY;
     this.redraw();
   }
 
@@ -251,29 +275,47 @@ export class StrokeRenderer {
       return;
     }
 
-    // Debug: log transforms
-    const strokesWithTransforms = strokes.filter(s => s.transform);
-    if (strokesWithTransforms.length > 0) {
-      console.log(`Found ${strokesWithTransforms.length} strokes with transforms:`);
-      strokesWithTransforms.forEach((s, i) => {
-        console.log(`  Stroke ${i}:`, s.transform);
-      });
-    } else {
-      console.log('No strokes have transforms');
-    }
-
-    // Calculate bounds and base scaling
+    // Simple approach: just center the drawing without auto-scaling
     const bounds = this.calculateBounds(strokes);
     const width = bounds.maxX - bounds.minX;
     const height = bounds.maxY - bounds.minY;
 
-    const padding = 40;
-    const scaleX = (this.canvas.width - padding * 2) / width;
-    const scaleY = (this.canvas.height - padding * 2) / height;
-    this.baseScale = Math.min(scaleX, scaleY);
+    // Use logical dimensions (not physical pixels)
+    const rect = this.canvas.getBoundingClientRect();
+    this.logicalHeight = rect.height; // Store for Y-axis flipping
 
-    this.offsetX = padding - bounds.minX * this.baseScale;
-    this.offsetY = padding - bounds.minY * this.baseScale;
+    // Always use baseScale = 1 (no scaling at base level)
+    this.baseScale = 1;
+
+    // Step 1: Center the drawing at userScale = 1
+    // Drawing center in original coordinates (bottom-left origin)
+    const drawingCenterX = bounds.minX + width / 2;
+    const drawingCenterY = bounds.minY + height / 2;
+
+    // After Y-flip, the drawing center becomes:
+    const flippedDrawingCenterY = this.logicalHeight - drawingCenterY;
+
+    // Canvas center
+    const canvasCenterX = rect.width / 2;
+    const canvasCenterY = rect.height / 2;
+
+    // Pan to place drawing center at canvas center (at scale 1)
+    this.offsetX = 0;
+    this.offsetY = 0;
+    this.initialPanX = canvasCenterX - drawingCenterX;
+    this.initialPanY = canvasCenterY - flippedDrawingCenterY;
+    this.panX = this.initialPanX;
+    this.panY = this.initialPanY;
+
+    // Step 2: Calculate auto-zoom to fit drawing in viewport
+    const padding = 40;
+    const scaleToFitX = (rect.width - padding * 2) / width;
+    const scaleToFitY = (rect.height - padding * 2) / height;
+    const scaleToFit = Math.min(scaleToFitX, scaleToFitY);
+
+    // Apply the zoom (this will adjust pan to keep center stable)
+    this.userScale = 1; // Start at 1
+    this.zoomTowardCenter(scaleToFit);
 
     this.redraw();
   }
@@ -330,15 +372,15 @@ export class StrokeRenderer {
 
     const firstPoint = stroke.points[0];
     this.ctx.moveTo(
-      firstPoint.x * this.baseScale + this.offsetX,
-      this.canvas.height - (firstPoint.y * this.baseScale + this.offsetY)
+      firstPoint.x * this.baseScale,
+      this.logicalHeight - (firstPoint.y * this.baseScale)
     );
 
     for (let i = 1; i < stroke.points.length; i++) {
       const point = stroke.points[i];
       this.ctx.lineTo(
-        point.x * this.baseScale + this.offsetX,
-        this.canvas.height - (point.y * this.baseScale + this.offsetY)
+        point.x * this.baseScale,
+        this.logicalHeight - (point.y * this.baseScale)
       );
     }
 
