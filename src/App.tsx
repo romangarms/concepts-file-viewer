@@ -1,13 +1,13 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { FileUploader } from './components/FileUploader.js';
-import { Viewer } from './components/Viewer.js';
+import { Home } from './pages/Home.js';
+import { ViewerPage } from './pages/ViewerPage.js';
 
 export function App() {
   return (
     <BrowserRouter>
       <Routes>
-        <Route path="/" element={<FileUploader />} />
-        <Route path="/viewer" element={<Viewer />} />
+        <Route path="/" element={<Home />} />
+        <Route path="/viewer" element={<ViewerPage />} />
       </Routes>
     </BrowserRouter>
   );

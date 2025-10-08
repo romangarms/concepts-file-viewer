@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react';
 import { useLocation, useNavigate } from 'react-router-dom';
 import { useStrokeRenderer } from '../hooks/useStrokeRenderer.js';
-import { ZoomControls } from './ZoomControls.js';
-import { Toast } from './Toast.js';
+import { ZoomControls } from '../components/ZoomControls.js';
+import { Toast } from '../components/Toast.js';
 import type { DrawingData } from '../types.js';
 
-export function Viewer() {
+export function ViewerPage() {
   const location = useLocation();
   const navigate = useNavigate();
   const { canvasRef, render, zoomIn, zoomOut, resetView } = useStrokeRenderer();
@@ -16,7 +16,22 @@ export function Viewer() {
   });
 
   useEffect(() => {
-    const data = location.state?.data as DrawingData | undefined;
+    let data = location.state?.data as DrawingData | undefined;
+
+    // If no data in location state, try to restore from localStorage
+    if (!data) {
+      const savedData = localStorage.getItem('conceptsDrawingData');
+      if (savedData) {
+        try {
+          data = JSON.parse(savedData) as DrawingData;
+        } catch (error) {
+          console.error('Failed to parse saved drawing data:', error);
+        }
+      }
+    } else {
+      // Save data to localStorage when it's provided via navigation
+      localStorage.setItem('conceptsDrawingData', JSON.stringify(data));
+    }
 
     if (!data) {
       setToast({
@@ -32,7 +47,7 @@ export function Viewer() {
 
     // Show success toast
     setToast({
-      message: `Loaded ${data.strokes.length} strokes`,
+      message: `Loaded ${data.strokes.length} strokes and ${data.images.length} images`,
       type: 'success',
       show: true,
     });
