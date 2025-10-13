@@ -46,12 +46,12 @@ export class FileHandler {
     const plistData = parsed[0];
     const drawingData = parseConceptsStrokes(plistData);
 
-    // Extract images from ImportedImages folder
+    // Extract images and PDFs from ImportedImages folder
     const importedImagesFolder = zip.folder('ImportedImages');
     if (importedImagesFolder) {
       const imagePromises = drawingData.images.map(async (image) => {
-        // Try common image extensions
-        const extensions = ['jpeg', 'jpg', 'png', 'gif', 'webp'];
+        // Try common image extensions and PDF
+        const extensions = ['jpeg', 'jpg', 'png', 'gif', 'webp', 'pdf'];
         for (const ext of extensions) {
           const imageFile = zip.file(`ImportedImages/${image.uuid}.${ext}`);
           if (imageFile) {
@@ -62,7 +62,8 @@ export class FileHandler {
                 .map((byte) => String.fromCharCode(byte))
                 .join('')
             );
-            image.imageData = `data:image/${ext};base64,${base64}`;
+            const mimeType = ext === 'pdf' ? 'application/pdf' : `image/${ext}`;
+            image.imageData = `data:${mimeType};base64,${base64}`;
             break;
           }
         }

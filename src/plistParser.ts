@@ -232,6 +232,66 @@ function extractImageItem(obj: PlistObject, objects: PlistObject[]): ImportedIma
 }
 
 /**
+ * Attempts to extract a PDF page from a TiledPDFPage object
+ */
+function extractPdfPageItem(obj: PlistObject, objects: PlistObject[]): ImportedImage | null {
+  // Check if this is a TiledPDFPage by looking for resourceIdentifier
+  if (!('resourceIdentifier' in obj)) {
+    return null;
+  }
+
+  // Extract PDF UUID
+  const resourceIdUID = obj['resourceIdentifier'];
+  if (!isUID(resourceIdUID)) {
+    return null;
+  }
+  const uuid = objects[getUIDValue(resourceIdUID)];
+  if (typeof uuid !== 'string') {
+    return null;
+  }
+
+  // Extract page number
+  // Concepts stores 'page' field as 1-indexed, we need 0-indexed for PDF.js
+  let pageNumber = 0;
+  if ('page' in obj && typeof obj['page'] === 'number') {
+    // Convert from 1-indexed (Concepts) to 0-indexed (our system and PDF.js)
+    pageNumber = obj['page'] - 1;
+  }
+
+  // Extract size
+  let size: Point = { x: 100, y: 100 }; // Default size
+  if ('size' in obj) {
+    const sizeUID = obj['size'];
+    if (isUID(sizeUID)) {
+      const sizeStr = objects[getUIDValue(sizeUID)];
+      if (typeof sizeStr === 'string') {
+        const parsedSize = parseSize(sizeStr);
+        if (parsedSize) {
+          size = parsedSize;
+        }
+      }
+    }
+  }
+
+  // Extract transform (position is in the transform)
+  const transform = extractTransform(obj);
+
+  // The position is stored in the transform's tx and ty values
+  const position: Point = {
+    x: transform?.tx ?? 0,
+    y: transform?.ty ?? 0,
+  };
+
+  return {
+    uuid,
+    position,
+    size,
+    transform,
+    pageNumber,
+  };
+}
+
+/**
  * Attempts to extract stroke points from a stroke object
  */
 function extractStrokePoints(obj: PlistObject, objects: PlistObject[]): Point[] | null {
@@ -342,6 +402,13 @@ export function parseConceptsStrokes(plistData: any): DrawingData {
       const image = extractImageItem(obj, objects);
       if (image) {
         images.push(image);
+        continue;
+      }
+
+      // Try to extract as a PDF page
+      const pdfPage = extractPdfPageItem(obj, objects);
+      if (pdfPage) {
+        images.push(pdfPage);
         continue;
       }
 

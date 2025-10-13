@@ -1,7 +1,11 @@
+import * as pdfjsLib from 'pdfjs-dist';
 import type { ImportedImage, Transform } from './types.js';
 
+// Configure PDF.js worker
+pdfjsLib.GlobalWorkerOptions.workerSrc = '/dist/pdf.worker.mjs';
+
 /**
- * Handles loading and rendering of imported images
+ * Handles loading and rendering of imported images and PDFs
  */
 export class ImageRenderer {
   private loadedImages: Map<string, HTMLImageElement> = new Map();
@@ -19,18 +23,79 @@ export class ImageRenderer {
   }
 
   /**
-   * Load and cache an image by UUID
+   * Load and render a PDF page to HTMLImageElement
    */
-  async loadAndCache(uuid: string, imageData: string): Promise<void> {
-    if (this.loadedImages.has(uuid)) {
+  private async loadPdf(pdfData: string, pageNumber: number = 0): Promise<HTMLImageElement> {
+    // Load the PDF document
+    const loadingTask = pdfjsLib.getDocument(pdfData);
+    const pdf = await loadingTask.promise;
+
+    // Get the specified page (1-indexed in PDF.js)
+    const requestedPage = pageNumber + 1;
+    const page = await pdf.getPage(requestedPage);
+
+    // Render at 2x scale for better quality
+    const scale = 2.0;
+    const viewport = page.getViewport({ scale });
+
+    // Create canvas to render PDF page
+    const canvas = document.createElement('canvas');
+    const context = canvas.getContext('2d');
+    if (!context) {
+      throw new Error('Failed to get canvas context for PDF rendering');
+    }
+
+    canvas.width = viewport.width;
+    canvas.height = viewport.height;
+
+    // Render PDF page to canvas
+    const renderContext: any = {
+      canvasContext: context,
+      viewport: viewport,
+    };
+    await page.render(renderContext).promise;
+
+    // Convert canvas to HTMLImageElement
+    return new Promise((resolve, reject) => {
+      canvas.toBlob((blob) => {
+        if (!blob) {
+          reject(new Error('Failed to convert PDF page to blob'));
+          return;
+        }
+
+        const img = new Image();
+        img.onload = () => {
+          URL.revokeObjectURL(img.src);
+          resolve(img);
+        };
+        img.onerror = reject;
+        img.src = URL.createObjectURL(blob);
+      });
+    });
+  }
+
+  /**
+   * Load and cache an image or PDF page by UUID
+   */
+  async loadAndCache(uuid: string, imageData: string, pageNumber?: number): Promise<void> {
+    // Create a unique key for this image/PDF page combination
+    const cacheKey = pageNumber !== undefined ? `${uuid}_page${pageNumber}` : uuid;
+
+    if (this.loadedImages.has(cacheKey)) {
       return;
     }
 
     try {
-      const img = await this.loadImage(imageData);
-      this.loadedImages.set(uuid, img);
+      // Check if this is a PDF
+      const isPdf = imageData.startsWith('data:application/pdf');
+
+      const img = isPdf
+        ? await this.loadPdf(imageData, pageNumber ?? 0)
+        : await this.loadImage(imageData);
+
+      this.loadedImages.set(cacheKey, img);
     } catch (error) {
-      console.error(`Failed to load image ${uuid}:`, error);
+      console.error(`Failed to load image/PDF ${uuid}:`, error);
       throw error;
     }
   }
@@ -38,15 +103,17 @@ export class ImageRenderer {
   /**
    * Check if an image is loaded
    */
-  has(uuid: string): boolean {
-    return this.loadedImages.has(uuid);
+  has(uuid: string, pageNumber?: number): boolean {
+    const cacheKey = pageNumber !== undefined ? `${uuid}_page${pageNumber}` : uuid;
+    return this.loadedImages.has(cacheKey);
   }
 
   /**
    * Get a loaded image
    */
-  get(uuid: string): HTMLImageElement | undefined {
-    return this.loadedImages.get(uuid);
+  get(uuid: string, pageNumber?: number): HTMLImageElement | undefined {
+    const cacheKey = pageNumber !== undefined ? `${uuid}_page${pageNumber}` : uuid;
+    return this.loadedImages.get(cacheKey);
   }
 
   /**
@@ -68,53 +135,53 @@ export class ImageRenderer {
   }
 
   /**
-   * Render a single image to the canvas
+   * Render a single image or PDF page to the canvas
+   *
+   * In Concepts, images/PDFs are positioned by their CENTER point (tx, ty):
+   * - If a transform exists, use the full affine transform
+   * - If no transform, treat as identity transform at position (0, 0)
    */
   render(
     ctx: CanvasRenderingContext2D,
     image: ImportedImage,
     baseScale: number
   ): void {
-    const img = this.loadedImages.get(image.uuid);
-    if (!img) return;
+    const cacheKey = image.pageNumber !== undefined ? `${image.uuid}_page${image.pageNumber}` : image.uuid;
+
+    const img = this.get(image.uuid, image.pageNumber);
+    if (!img) {
+      console.warn(`[Renderer] Image not found in cache: ${cacheKey}`);
+      return;
+    }
 
     ctx.save();
 
-    // Apply transform if present
+    // Apply transform or identity transform with position
     if (image.transform) {
+      // Full affine transform (includes rotation, scale, translation)
       this.applyConceptsTransform(ctx, image.transform, baseScale);
-
-      // Transform positions the image CENTER at (tx, ty)
-      const halfWidth = (image.size.x * baseScale) / 2;
-      const halfHeight = (image.size.y * baseScale) / 2;
-
-      // Flip the image around its own Y-axis (at its center)
-      ctx.scale(1, -1);
-
-      // Draw with offset (note: Y is negated because we flipped)
-      ctx.drawImage(
-        img,
-        -halfWidth,
-        -halfHeight,
-        image.size.x * baseScale,
-        image.size.y * baseScale
-      );
     } else {
-      // No transform - draw at position (bottom-left corner in Concepts coords)
-      const drawX = image.position.x * baseScale;
-      const drawY = image.position.y * baseScale;
-      const width = image.size.x * baseScale;
-      const height = image.size.y * baseScale;
-
-      // Translate to image center
-      ctx.translate(drawX + width / 2, drawY + height / 2);
-
-      // Flip the image around its own Y-axis
-      ctx.scale(1, -1);
-
-      // Draw centered at origin
-      ctx.drawImage(img, -width / 2, -height / 2, width, height);
+      // Identity transform - just translate to position
+      const tx = image.position.x;
+      const ty = image.position.y;
+      ctx.translate(tx * baseScale, ty * baseScale);
     }
+
+    // Image center is positioned at (tx, ty) in Concepts coordinates
+    const halfWidth = (image.size.x * baseScale) / 2;
+    const halfHeight = (image.size.y * baseScale) / 2;
+
+    // Flip the image around its own Y-axis (at its center)
+    ctx.scale(1, -1);
+
+    // Draw with offset (note: Y is negated because we flipped)
+    ctx.drawImage(
+      img,
+      -halfWidth,
+      -halfHeight,
+      image.size.x * baseScale,
+      image.size.y * baseScale
+    );
 
     ctx.restore();
   }

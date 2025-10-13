@@ -32,13 +32,14 @@ export interface Stroke {
   closed?: boolean;  // Whether the path should connect back to start
 }
 
-// An imported image in the drawing
+// An imported image or PDF page in the drawing
 export interface ImportedImage {
-  uuid: string;       // Image UUID (matches filename in ImportedImages/)
+  uuid: string;       // Image/PDF UUID (matches filename in ImportedImages/)
   position: Point;    // Position in drawing coordinates
   size: Point;        // Size (width, height) in drawing coordinates
   transform?: Transform; // Optional transform (for moved/rotated images)
-  imageData?: string; // Base64 encoded image data
+  imageData?: string; // Base64 encoded image/PDF data
+  pageNumber?: number; // For PDFs: which page to render (0-indexed)
 }
 
 // Plist object with UID reference

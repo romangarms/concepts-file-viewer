@@ -312,13 +312,13 @@ export class StrokeRenderer {
       return;
     }
 
-    // Load all images
+    // Load all images and PDFs
     for (const image of images) {
-      if (image.imageData && !this.imageRenderer.has(image.uuid)) {
+      if (image.imageData && !this.imageRenderer.has(image.uuid, image.pageNumber)) {
         try {
-          await this.imageRenderer.loadAndCache(image.uuid, image.imageData);
+          await this.imageRenderer.loadAndCache(image.uuid, image.imageData, image.pageNumber);
         } catch (error) {
-          console.error(`Failed to load image ${image.uuid}:`, error);
+          console.error(`Failed to load image/PDF ${image.uuid}:`, error);
         }
       }
     }
