@@ -1,0 +1,12 @@
+# Environments
+.venv
+
+#MacOS
+.DS_Store
+
+#Node
+/node_modules/
+dist/
+
+#Claude
+.claude/
