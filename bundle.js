@@ -44962,7 +44962,8 @@ globalThis.pdfjsLib = {
 };
 
 // src/imageRenderer.ts
-GlobalWorkerOptions.workerSrc = "/dist/pdf.worker.mjs";
+var isProduction = window.location.hostname !== "localhost" && window.location.hostname !== "127.0.0.1";
+GlobalWorkerOptions.workerSrc = isProduction ? "./pdf.worker.mjs" : "/dist/pdf.worker.mjs";
 var ImageRenderer = class {
   constructor() {
     this.loadedImages = /* @__PURE__ */ new Map();
