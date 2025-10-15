@@ -50,13 +50,34 @@ function copyPdfWorker() {
   }
 }
 
+/**
+ * Copy CNAME file to dist folder for GitHub Pages custom domain
+ */
+function copyCNAME() {
+  const cnameSrc = path.join(__dirname, 'CNAME');
+  const cnameDest = path.join(__dirname, 'dist', 'CNAME');
+
+  // Create dist directory if it doesn't exist
+  if (!fs.existsSync(path.join(__dirname, 'dist'))) {
+    fs.mkdirSync(path.join(__dirname, 'dist'));
+  }
+
+  // Copy CNAME file if it exists
+  if (fs.existsSync(cnameSrc)) {
+    fs.copyFileSync(cnameSrc, cnameDest);
+    console.log('✓ Copied CNAME to dist/');
+  }
+}
+
 if (isWatch) {
   copyPdfWorker();
+  copyCNAME();
   Promise.all(configs.map(config => esbuild.context(config))).then(contexts => {
     contexts.forEach(ctx => ctx.watch());
     console.log('Watching for changes...');
   });
 } else {
   copyPdfWorker();
+  copyCNAME();
   Promise.all(configs.map(config => esbuild.build(config))).catch(() => process.exit(1));
 }
