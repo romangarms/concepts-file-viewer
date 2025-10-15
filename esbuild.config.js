@@ -69,9 +69,42 @@ function copyCNAME() {
   }
 }
 
+/**
+ * Copy static files (HTML, CSS) to dist folder and fix paths for deployment
+ */
+function copyStaticFiles() {
+  const distDir = path.join(__dirname, 'dist');
+
+  // Create dist directory if it doesn't exist
+  if (!fs.existsSync(distDir)) {
+    fs.mkdirSync(distDir);
+  }
+
+  // Copy styles.css
+  const stylesSrc = path.join(__dirname, 'styles.css');
+  const stylesDest = path.join(distDir, 'styles.css');
+  if (fs.existsSync(stylesSrc)) {
+    fs.copyFileSync(stylesSrc, stylesDest);
+    console.log('✓ Copied styles.css to dist/');
+  }
+
+  // Read and modify index.html for deployment
+  const indexSrc = path.join(__dirname, 'index.html');
+  const indexDest = path.join(distDir, 'index.html');
+  if (fs.existsSync(indexSrc)) {
+    let html = fs.readFileSync(indexSrc, 'utf8');
+    // Fix paths: remove 'dist/' prefix since dist becomes the root on GitHub Pages
+    html = html.replace('src="dist/bundle.js"', 'src="./bundle.js"');
+    html = html.replace('href="styles.css"', 'href="./styles.css"');
+    fs.writeFileSync(indexDest, html);
+    console.log('✓ Copied and updated index.html to dist/');
+  }
+}
+
 if (isWatch) {
   copyPdfWorker();
   copyCNAME();
+  copyStaticFiles();
   Promise.all(configs.map(config => esbuild.context(config))).then(contexts => {
     contexts.forEach(ctx => ctx.watch());
     console.log('Watching for changes...');
@@ -79,5 +112,6 @@ if (isWatch) {
 } else {
   copyPdfWorker();
   copyCNAME();
+  copyStaticFiles();
   Promise.all(configs.map(config => esbuild.build(config))).catch(() => process.exit(1));
 }
