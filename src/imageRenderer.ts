@@ -2,7 +2,12 @@ import * as pdfjsLib from 'pdfjs-dist';
 import type { ImportedImage, Transform } from './types.js';
 
 // Configure PDF.js worker
-pdfjsLib.GlobalWorkerOptions.workerSrc = '/dist/pdf.worker.mjs';
+// In production (GitHub Pages), the worker is at ./pdf.worker.mjs relative to index.html
+// In dev, it's at /dist/pdf.worker.mjs
+const isProduction = window.location.hostname !== 'localhost' && window.location.hostname !== '127.0.0.1';
+pdfjsLib.GlobalWorkerOptions.workerSrc = isProduction
+  ? './pdf.worker.mjs'
+  : '/dist/pdf.worker.mjs';
 
 /**
  * Handles loading and rendering of imported images and PDFs
